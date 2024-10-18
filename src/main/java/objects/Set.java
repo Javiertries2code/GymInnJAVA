@@ -7,6 +7,7 @@ public class Set {
 	private String name;
 	private String description;
 	private Integer reps;
+
 	public Set(String name, String description, Integer reps) {
 		super();
 		this.name = name;

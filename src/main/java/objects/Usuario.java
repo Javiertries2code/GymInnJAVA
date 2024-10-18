@@ -9,18 +9,23 @@ public class Usuario {
 	private String password;
 	private String surname;
 	private boolean registered; 
+	private boolean isTrainer; 
 	//its called ref_workouts in firebase.
 	private String workout;
 	
 	
+	
 
-	public Usuario(String user, String name, String password, String surname, boolean registered, String workout) {
+
+	public Usuario(String user, String name, String password, String surname, boolean registered, boolean isTrainer,
+			String workout) {
 		super();
 		this.user = user;
 		this.name = name;
 		this.password = password;
 		this.surname = surname;
 		this.registered = registered;
+		this.isTrainer = isTrainer;
 		this.workout = workout;
 	}
 	public Usuario() {
@@ -29,6 +34,8 @@ public class Usuario {
 		this.password = "NOpassword";
 		this.surname = "surname";
 		this.registered = false;
+		this.isTrainer = false;
+
 		this.user = "user";
 		this.workout = null;
 	}
@@ -62,6 +69,12 @@ public class Usuario {
 	public void setRegistered(boolean registered) {
 		this.registered = registered;
 	}
+	public boolean isTrainer() {
+		return isTrainer;
+	}
+	public void setTrainer(boolean isTrainer) {
+		this.isTrainer = isTrainer;
+	}
 	public String getWorkout() {
 		return workout;
 	}
@@ -71,11 +84,11 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [user=" + user + ", name=" + name + ", password=" + password + ", surname=" + surname
-				+ ", registered=" + registered + ", workout=" + workout + "]";
+				+ ", registered=" + registered + ", isTrainer=" + isTrainer + ", workout=" + workout + "]";
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, password, registered, surname, user, workout);
+		return Objects.hash(isTrainer, name, password, registered, surname, user, workout);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -86,10 +99,12 @@ public class Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(name, other.name) && Objects.equals(password, other.password)
-				&& registered == other.registered && Objects.equals(surname, other.surname)
-				&& Objects.equals(user, other.user) && Objects.equals(workout, other.workout);
+		return isTrainer == other.isTrainer && Objects.equals(name, other.name)
+				&& Objects.equals(password, other.password) && registered == other.registered
+				&& Objects.equals(surname, other.surname) && Objects.equals(user, other.user)
+				&& Objects.equals(workout, other.workout);
 	}
+
 	
 	
 }
