@@ -22,7 +22,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
-public class AccesoDatos  implements DatosInterface{
+public class AccesoDatos  implements FirebaseDatosInterface{
 
 	 private static Firestore db = null;
 	 private static final String FIREBASE_JASON = "C:\\Users\\Javier\\eclipse-workspace\\GymInn\\gymconection.json";

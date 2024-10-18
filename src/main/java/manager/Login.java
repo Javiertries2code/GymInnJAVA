@@ -1,4 +1,4 @@
-package app;
+package manager;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,14 +29,10 @@ public class Login {
 		for (QueryDocumentSnapshot usuario : usuarios) {
 		   
 		    if(usuario.getString("user").equalsIgnoreCase(user) && usuario.getString("password").equals(password))
-		    { System.out.println("ID: " + usuario.getId());
-		    System.out.println("Nombre: " + usuario.getString("user"));
-		    System.out.println("password: " + usuario.getString("password"));
-			//JOptionPane.showMessageDialog("Login result", "Nombre: " + usuario.getString("user logueado"));
-		    return true;
+		    { 
+		  		    return true;
 		    }
 		}
-		JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
 		return false;
 	}
 	

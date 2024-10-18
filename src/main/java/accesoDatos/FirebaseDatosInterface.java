@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public interface DatosInterface<T> {
+public interface FirebaseDatosInterface<T> {
 
 	
 	public List<T> encontrarUsuariosFirebase() throws InvalidClassException,StreamCorruptedException , ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;
 
+
+	
 }

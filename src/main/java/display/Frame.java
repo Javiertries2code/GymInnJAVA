@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 
 public class Frame extends JFrame {
 
+	 
+	
 	private List<JPanel> panels = null;
 	
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,7 @@ public class Frame extends JFrame {
 	public enum NamePanel {
 	    LOGIN,
 	    REGISTER,
+	    WORKOUT,
 	  
 	}
 	
@@ -69,6 +72,13 @@ public class Frame extends JFrame {
 		register.setVisible(false);
 		contentPanel.add(register);
 		panels.add(register);
+		
+		//2
+		WorkoutPanel workout = new WorkoutPanel(panels);
+		//workout.setBounds(0, 0,650, 500);
+		workout.setVisible(false);
+		contentPanel.add(workout);
+		panels.add(workout);
 		
 		panelsvisibility(NamePanel.LOGIN, panels);
 		
