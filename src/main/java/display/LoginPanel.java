@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InvalidClassException;
 import java.io.StreamCorruptedException;
 import java.util.concurrent.ExecutionException;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import display.*;
@@ -43,11 +44,13 @@ public class LoginPanel extends AbstractPanel {
 
 		// TO-DO
 		// must be removed, this is for quick entry while coding
-		textFieldUser.setText("1111");
+		textFieldUser.setText("juan@juanez.com");
 		textFieldPassword.setText("password1");
 
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(225, 322, 89, 23);
+		btnLogin.setForeground(Color.RED);
+		btnLogin.setBackground(Color.BLACK);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
