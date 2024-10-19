@@ -16,13 +16,13 @@ import objects.Usuario;
 
 public class Login {
 	
-	public static Usuario currentUser =null;
+	public static Usuario currentUser =new Usuario();
 	
 
 	public boolean verifyUser(String user, String password) throws InvalidClassException, StreamCorruptedException, ClassNotFoundException
 	, FileNotFoundException, IOException, InterruptedException, ExecutionException {
 		
-		List<QueryDocumentSnapshot> usuarios = new AccesoDatos().encontrarUsuariosFirebase();
+		List<QueryDocumentSnapshot> usuarios = new AccesoDatos().findUsuariosFirebase();
 		
 		return findUserList(user, password, usuarios);
 		
@@ -50,7 +50,7 @@ public class Login {
 	}
 
 	private void loadCurrentUser(QueryDocumentSnapshot usuario) {
-		currentUser = new Usuario();
+		//currentUser = new Usuario();
 
 
 		currentUser.setName(usuario.getString("name"));
@@ -59,6 +59,8 @@ public class Login {
 		currentUser.setLevel(usuario.getDouble("level").intValue());
 		currentUser.setEmail(usuario.getString("email"));
 		
+		
+		System.out.println(currentUser.toString() + "in loadCurrentUser Login");
 		
 	}
 	

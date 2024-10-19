@@ -4,10 +4,23 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 import javax.swing.JTextField;
 
+import manager.UserInfo;
 
-public abstract class AbstractPanel extends JPanel {
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InvalidClassException;
+import java.io.StreamCorruptedException;
+import java.awt.event.ActionEvent;
+
+
+public abstract class AbstractPanel  extends JPanel  
+{
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textName;
@@ -25,6 +38,21 @@ public abstract class AbstractPanel extends JPanel {
 		textName.setBounds(203, 11, 86, 20);
 		add(textName);
 		textName.setColumns(10);
+		
+		JButton btnProfile = new JButton("Profile");
+		btnProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					new UserInfo().getUserInfor();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+			}
+		});
+		btnProfile.setBounds(366, 10, 89, 23);
+		add(btnProfile);
 
 	}
 }

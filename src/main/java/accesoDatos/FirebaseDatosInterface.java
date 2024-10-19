@@ -8,10 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+
 public interface FirebaseDatosInterface<T> {
 
 	
-	public List<T> encontrarUsuariosFirebase() throws InvalidClassException,StreamCorruptedException , ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;
+	public List<T> findUsuariosFirebase() throws InvalidClassException,StreamCorruptedException , ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;
+
+	public List<QueryDocumentSnapshot> findWorkoutsFirebase() throws InvalidClassException, StreamCorruptedException,
+			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;
 
 
 	

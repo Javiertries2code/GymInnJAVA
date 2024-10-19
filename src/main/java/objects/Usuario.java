@@ -34,6 +34,7 @@ public class Usuario {
 		this.ref_workouts = ref_workouts;
 		this.wk_history = wk_history;
 	}
+	/*
 	public Usuario() {
 		super();
 		this.name = "";
@@ -48,9 +49,14 @@ public class Usuario {
 		this.ref_workouts = null;
 		this.wk_history = null;
 	}
+	*/
+	
 	
 	public String getName() {
 		return name;
+	}
+	public Usuario() {
+		super();
 	}
 	public void setName(String name) {
 		this.name = name;

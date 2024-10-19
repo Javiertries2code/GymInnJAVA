@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 
 import accesoDatos.AccesoDatos;
-import manager.Register;
+
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -36,30 +36,6 @@ public class RegisterPanel extends AbstractPanel {
 		JButton btnRegister = new JButton("Go to resigster");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					new Register().getUserInfor("1111");
-				} catch (InvalidClassException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (StreamCorruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ExecutionException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				
 			}
 		});

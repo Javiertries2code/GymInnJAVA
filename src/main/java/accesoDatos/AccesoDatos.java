@@ -68,19 +68,33 @@ public class AccesoDatos  implements FirebaseDatosInterface{
 
 	//TO-DO  Make it genereric as to retrieve and return any tipe of entity provided as a param
 	@Override
-	public List<QueryDocumentSnapshot> encontrarUsuariosFirebase() throws InvalidClassException, StreamCorruptedException,
+	public List<QueryDocumentSnapshot> findUsuariosFirebase() throws InvalidClassException, StreamCorruptedException,
 			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException {
 		
 		db = getDatabase();
 		ApiFuture<QuerySnapshot> query = db.collection("usuarios").get();
 
 		QuerySnapshot querySnapshot = query.get();
-		List<QueryDocumentSnapshot> departamentos = querySnapshot.getDocuments();
+		List<QueryDocumentSnapshot> usuarios = querySnapshot.getDocuments();
 		
 		
-		return departamentos;
+		return usuarios;
 	}
 
+	@Override
+	public List<QueryDocumentSnapshot> findWorkoutsFirebase() throws InvalidClassException, StreamCorruptedException,
+			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException {
+		
+		db = getDatabase();
+		ApiFuture<QuerySnapshot> query = db.collection("workouts").get();
+
+		QuerySnapshot querySnapshot = query.get();
+		List<QueryDocumentSnapshot> workouts = querySnapshot.getDocuments();
+		
 	
+	
+		return workouts;
+	}
+
 	
 }
