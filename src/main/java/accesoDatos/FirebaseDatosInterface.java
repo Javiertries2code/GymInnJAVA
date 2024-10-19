@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
+
+import objects.Workout;
 
 public interface FirebaseDatosInterface<T> {
 
@@ -17,6 +20,8 @@ public interface FirebaseDatosInterface<T> {
 
 	public List<QueryDocumentSnapshot> findWorkoutsFirebase() throws InvalidClassException, StreamCorruptedException,
 			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;
+
+	public Workout FindOneWorkout(DocumentReference docRef) throws InterruptedException, ExecutionException;
 
 
 	

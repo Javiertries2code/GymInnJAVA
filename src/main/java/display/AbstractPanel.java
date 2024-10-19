@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.JTextField;
 
+import manager.Login;
 import manager.UserInfo;
 
 import javax.swing.JButton;
@@ -43,12 +44,8 @@ public abstract class AbstractPanel  extends JPanel
 		btnProfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				try {
-					new UserInfo().getUserInfor();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} 
+				System.out.println(Login.currentUser.toString());
+				System.out.println(Login.currentUser.getWorkout().getRefSets().get(0).toString());
 			}
 		});
 		btnProfile.setBounds(366, 10, 89, 23);

@@ -16,7 +16,7 @@ import objects.Usuario;
 
 public class Login {
 	
-	public static Usuario currentUser =new Usuario();
+	public static Usuario currentUser =null;
 	
 
 	public boolean verifyUser(String user, String password) throws InvalidClassException, StreamCorruptedException, ClassNotFoundException
@@ -35,14 +35,21 @@ public class Login {
 	 * @param passwordinserted in a textfiel in login panel
 	 * @param usuarios list of usuarios retirve from firebase
 	 * @return
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 * @throws ClassNotFoundException 
+	 * @throws StreamCorruptedException 
+	 * @throws InvalidClassException 
 	 */
-	private boolean findUserList(String user, String password, List<QueryDocumentSnapshot> usuarios) {
+	private boolean findUserList(String email, String password, List<QueryDocumentSnapshot> usuarios) throws InvalidClassException, StreamCorruptedException, ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException {
 
 		for (QueryDocumentSnapshot usuario : usuarios) {
 		   
-		    if(usuario.getString("email").equalsIgnoreCase(user)  && usuario.getString("password").equals(password))
+		    if(usuario.getString("email").equalsIgnoreCase(email)  && usuario.getString("password").equals(password))
 		    {  
-		    	loadCurrentUser(usuario);
+		    	currentUser = new UserInfo().getUserInfor(email);
 		  		    return true;
 		    }
 		}
@@ -59,8 +66,6 @@ public class Login {
 		currentUser.setLevel(usuario.getDouble("level").intValue());
 		currentUser.setEmail(usuario.getString("email"));
 		
-		
-		System.out.println(currentUser.toString() + "in loadCurrentUser Login");
 		
 	}
 	
