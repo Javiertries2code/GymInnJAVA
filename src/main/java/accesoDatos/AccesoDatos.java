@@ -19,12 +19,14 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
+import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
+import manager.Login;
 import objects.Set;
 import objects.Workout;
 
@@ -89,8 +91,32 @@ public class AccesoDatos implements FirebaseDatosInterface {
 		return usuarios;
 	}
 
+	
+	/**
+	 * realod the info of the users workouts, and current level, neccesary to make sure that we are using current data
+	 * 
+	 *
+	 */
 	@Override
-	public List<QueryDocumentSnapshot> findWorkoutsFirebase() throws InvalidClassException, StreamCorruptedException,
+	public void reloadWorkout() throws InterruptedException, ExecutionException {
+		DocumentReference docRef = db.collection("usuarios").document(Login.currentUser.getId());
+		
+		ApiFuture<DocumentSnapshot> future = docRef.get();
+		DocumentSnapshot document = future.get();
+		System.out.println("reloadWorkout BEFORE" + Login.currentUser.getLevel());
+
+		Login.currentUser.setLevel(((DocumentSnapshot) document.getData()).getDouble("level").intValue());
+		
+		DocumentReference wkRef = (DocumentReference) document.getData().get("ref_workouts");
+		Login.currentUser.setWorkout(new AccesoDatos().getOneWorkout(wkRef));
+		System.out.println("reloadWorkout AFTER" + Login.currentUser.getLevel());
+	}
+	
+	/**
+	 * retrieves all workouts available in db, and returns the List<QueryDocumentSnapshot>
+	 */
+	@Override
+	public List<QueryDocumentSnapshot> getAllWorkoutsFirebase() throws InvalidClassException, StreamCorruptedException,
 			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException {
 
 		db = getDatabase();
@@ -101,9 +127,40 @@ public class AccesoDatos implements FirebaseDatosInterface {
 
 		return workouts;
 	}
+	
+	/**
+	 * Returns an arraylist with all the workouts of the same level and lower that the currentUsers holds (hence we reload beforehand)
+	 * @return
+	 * @throws InvalidClassException
+	 * @throws StreamCorruptedException
+	 * @throws ClassNotFoundException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public ArrayList<Workout> getSameLowerLevelWorkouts() throws InvalidClassException, StreamCorruptedException, ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException{
+		
+		//reloadWorkout();
+		
+		ArrayList<Workout> historyWorkouts = new ArrayList<Workout>();
+		db = getDatabase();
+		ApiFuture<QuerySnapshot> query = db.collection("workouts").whereGreaterThanOrEqualTo("level", Login.currentUser.getLevel()).orderBy("level", Query.Direction.DESCENDING).get();
+
+		QuerySnapshot querySnapshot = query.get();
+		List<QueryDocumentSnapshot> workouts = querySnapshot.getDocuments();
+		
+		for(QueryDocumentSnapshot workout: workouts)
+		{
+			historyWorkouts.add(getOneWorkout(workout.getReference()));
+		}
+		
+		return historyWorkouts;
+	
+	}
 
 	@Override
-	public Workout FindOneWorkout(DocumentReference docRef) throws InterruptedException, ExecutionException {
+	public Workout getOneWorkout(DocumentReference docRef) throws InterruptedException, ExecutionException {
 
 		Workout workout = new Workout();
 
@@ -120,7 +177,8 @@ public class AccesoDatos implements FirebaseDatosInterface {
 			workout.setNumSets(document.getDouble("num_sets").intValue());
 			workout.setUrl(document.getString("url"));
 			workout.setRefSets(refSets);
-
+			//refSetsDoc = (ArrayList<DocumentReference>) document.getData().get("ref_sets");
+			
 			Map<String, Object> workoutUsuario = document.getData();
 			for (Map.Entry<String, Object> entry : workoutUsuario.entrySet()) {
 				// System.out.println(entry.getKey() + " => " + entry.getValue() +" " +
@@ -130,6 +188,7 @@ public class AccesoDatos implements FirebaseDatosInterface {
 					refSetsDoc = (ArrayList<DocumentReference>) entry.getValue();
 				}
 			}
+		
 
 		} else {
 			System.out.println("No such workout found!");

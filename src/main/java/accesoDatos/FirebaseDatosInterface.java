@@ -18,10 +18,14 @@ public interface FirebaseDatosInterface<T> {
 	
 	public List<T> findUsuariosFirebase() throws InvalidClassException,StreamCorruptedException , ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;
 
-	public List<QueryDocumentSnapshot> findWorkoutsFirebase() throws InvalidClassException, StreamCorruptedException,
-			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;
 
-	public Workout FindOneWorkout(DocumentReference docRef) throws InterruptedException, ExecutionException;
+
+	public Workout getOneWorkout(DocumentReference docRef) throws InterruptedException, ExecutionException;
+
+	void reloadWorkout()  throws InterruptedException, ExecutionException;
+
+	List<QueryDocumentSnapshot> getAllWorkoutsFirebase() throws InvalidClassException, StreamCorruptedException,
+			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;;
 
 
 	

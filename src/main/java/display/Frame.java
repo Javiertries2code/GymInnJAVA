@@ -14,6 +14,15 @@ public class Frame extends JFrame {
 	
 	private List<JPanel> panels = null;
 	
+	public List<JPanel> getPanels() {
+		return panels;
+	}
+
+
+	public void setPanels(List<JPanel> panels) {
+		this.panels = panels;
+	}
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel;
 	

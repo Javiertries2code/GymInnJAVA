@@ -8,8 +8,11 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.JTextField;
 
+import display.Frame.NamePanel;
 import manager.Login;
 import manager.UserInfo;
+import manager.Workouts;
+import objects.Workout;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -40,6 +43,7 @@ public abstract class AbstractPanel  extends JPanel
 		add(textName);
 		textName.setColumns(10);
 		
+		//TO-DO profile
 		JButton btnProfile = new JButton("Profile");
 		btnProfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -50,6 +54,8 @@ public abstract class AbstractPanel  extends JPanel
 		});
 		btnProfile.setBounds(366, 10, 89, 23);
 		add(btnProfile);
+		
+		
 
 	}
 }

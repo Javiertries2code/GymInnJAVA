@@ -20,6 +20,7 @@ import objects.Workout;
 import manager.Login;
 
 public class UserInfo {
+	
 	public Usuario getUserInfor(String email) throws InvalidClassException, StreamCorruptedException, ClassNotFoundException,
 			FileNotFoundException, IOException, InterruptedException, ExecutionException {
 
@@ -33,7 +34,10 @@ public class UserInfo {
 
 			if (usuario.getString("email").equalsIgnoreCase(email)) {
 
+				miUsuario.setId(usuario.getString("id"));
 				miUsuario.setName(usuario.getString("name"));
+				miUsuario.setLevel(usuario.getDouble("level").intValue());
+				miUsuario.setProgress(usuario.getDouble("progress").intValue());
 				miUsuario.setSurname(usuario.getString("surname"));
 				miUsuario.setPassword(usuario.getString("password"));
 				miUsuario.setRegistered(usuario.getBoolean("registered"));
@@ -44,7 +48,7 @@ public class UserInfo {
 //					System.out.println("FOUND REFERENCE: " + wkRef);
 //
 //					System.out.println("FOUND REFERENCE: " + wkRef.getPath());
-					miUsuario.setWorkout(new AccesoDatos().FindOneWorkout(wkRef));
+					miUsuario.setWorkout(new AccesoDatos().getOneWorkout(wkRef));
 				
 				}
 
