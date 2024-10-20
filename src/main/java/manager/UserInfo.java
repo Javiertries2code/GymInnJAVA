@@ -14,7 +14,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.protobuf.Int32Value;
 
-import accesoDatos.AccesoDatos;
+import accesoDatos.Reader;
 import objects.Usuario;
 import objects.Workout;
 import manager.Login;
@@ -29,7 +29,7 @@ public class UserInfo {
 		Long numSets = -2L;
 		ArrayList<DocumentReference> refSets = new ArrayList<DocumentReference>();
 
-		List<QueryDocumentSnapshot> usuarios = new AccesoDatos().findUsuariosFirebase();
+		List<QueryDocumentSnapshot> usuarios = new Reader().findUsuariosFirebase();
 		for (QueryDocumentSnapshot usuario : usuarios) {
 
 			if (usuario.getString("email").equalsIgnoreCase(email)) {
@@ -48,7 +48,7 @@ public class UserInfo {
 //					System.out.println("FOUND REFERENCE: " + wkRef);
 //
 //					System.out.println("FOUND REFERENCE: " + wkRef.getPath());
-					miUsuario.setWorkout(new AccesoDatos().getOneWorkout(wkRef));
+					miUsuario.setWorkout(new Reader().getOneWorkout(wkRef));
 				
 				}
 
@@ -58,12 +58,11 @@ public class UserInfo {
 
 	}
 
-	private void getWorkoutInfo(String idWorkout, String name) throws InvalidClassException, StreamCorruptedException,
-			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException {
+	private void getWorkoutInfo(String idWorkout, String name) throws Exception {
 		//System.out.println(idWorkout + "  " + name);
 		Workout miWorkout = new Workout();
 
-		List<QueryDocumentSnapshot> workouts = new AccesoDatos().findWorkoutsFirebase();
+		List<QueryDocumentSnapshot> workouts = new Reader().getAllWorkoutsFirebase();
 		for (QueryDocumentSnapshot workout : workouts) {
 
 			if (workout.getString("name").equalsIgnoreCase(name)) {

@@ -9,14 +9,19 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import display.*;
 
-import accesoDatos.AccesoDatos;
+import accesoDatos.Reader;
 import objects.Workout;
 
 public class Workouts {
 
-	public  ArrayList<Workout> showSameLowerLevelWorkouts() throws InvalidClassException, StreamCorruptedException, ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException {
+	public  ArrayList<Workout> showSameLowerLevelWorkouts(String level) throws InvalidClassException, StreamCorruptedException, ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException {
 		
-		ArrayList<Workout> workouts =  new AccesoDatos().getSameLowerLevelWorkouts();
+		int levelSearch;
+		if (level.isEmpty())
+			levelSearch = -1;
+		else 
+			levelSearch = Integer.parseInt(level);
+		ArrayList<Workout> workouts =  new Reader().getSameLowerLevelWorkouts(levelSearch);
 		
 		
 		

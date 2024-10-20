@@ -22,12 +22,14 @@ import javax.swing.JTable;
 
 
 import objects.Workout;
+import javax.swing.JTextField;
 
 public class WorkoutPanel extends AbstractPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private DefaultTableModel modelo;
+	private JTextField texLevel;
 	/**
 	 * Create the panel.
 	 */
@@ -47,13 +49,19 @@ public class WorkoutPanel extends AbstractPanel {
 				// create table
 				table = new JTable(modelo);
 				scrollWorkouts.setViewportView(table);
-		
+				
+				//input level search
+				texLevel = new JTextField();
+				texLevel.setBounds(484, 55, 86, 20);
+				add(texLevel);
+				texLevel.setColumns(10);
+				
 				JButton btnWorkouts = new JButton("Workouts");
 				btnWorkouts.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 					
 						try {
-							showAllWorkouts(modelo, new Workouts().showSameLowerLevelWorkouts());
+							showAllWorkouts(modelo, new Workouts().showSameLowerLevelWorkouts(texLevel.getText()));
 						} catch (InvalidClassException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -81,6 +89,8 @@ public class WorkoutPanel extends AbstractPanel {
 				});
 				btnWorkouts.setBounds(484, 10, 89, 23);
 				add(btnWorkouts);
+				
+			
 		
 		
 	}
@@ -108,5 +118,4 @@ public void showAllWorkouts(DefaultTableModel modelWorkouts, ArrayList<Workout> 
 		}
 	
 }
-
 }

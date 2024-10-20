@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 
-import accesoDatos.AccesoDatos;
+import accesoDatos.Reader;
 import objects.Usuario;
 
 public class Login {
@@ -22,7 +22,7 @@ public class Login {
 	public boolean verifyUser(String user, String password) throws InvalidClassException, StreamCorruptedException, ClassNotFoundException
 	, FileNotFoundException, IOException, InterruptedException, ExecutionException {
 		
-		List<QueryDocumentSnapshot> usuarios = new AccesoDatos().findUsuariosFirebase();
+		List<QueryDocumentSnapshot> usuarios = new Reader().findUsuariosFirebase();
 		
 		return findUserList(user, password, usuarios);
 		

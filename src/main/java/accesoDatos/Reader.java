@@ -30,7 +30,7 @@ import manager.Login;
 import objects.Set;
 import objects.Workout;
 
-public class AccesoDatos implements FirebaseDatosInterface {
+public class Reader implements FirebaseReaderInterface {
 
 	private static Firestore db = null;
 	private static final String FIREBASE_JASON = "C:\\Users\\Javier\\eclipse-workspace\\GymInn\\gymconection.json";
@@ -94,36 +94,38 @@ public class AccesoDatos implements FirebaseDatosInterface {
 	
 	/**
 	 * realod the info of the users workouts, and current level, neccesary to make sure that we are using current data
-	 * 
+	 * Not working by now
+	 * @throws IOException 
 	 *
 	 */
 	@Override
-	public void reloadWorkout() throws InterruptedException, ExecutionException {
-		DocumentReference docRef = db.collection("usuarios").document(Login.currentUser.getId());
+	public void reloadWorkout() throws InterruptedException, ExecutionException, IOException {
+		db = getDatabase();
 		
-		ApiFuture<DocumentSnapshot> future = docRef.get();
-		DocumentSnapshot document = future.get();
+		ApiFuture<DocumentSnapshot> query =  db.collection("usuarios").document(Login.currentUser.getId()).get();
+		DocumentSnapshot document = query.get();
 		System.out.println("reloadWorkout BEFORE" + Login.currentUser.getLevel());
 
 		Login.currentUser.setLevel(((DocumentSnapshot) document.getData()).getDouble("level").intValue());
 		
 		DocumentReference wkRef = (DocumentReference) document.getData().get("ref_workouts");
-		Login.currentUser.setWorkout(new AccesoDatos().getOneWorkout(wkRef));
+		Login.currentUser.setWorkout(new Reader().getOneWorkout(wkRef));
 		System.out.println("reloadWorkout AFTER" + Login.currentUser.getLevel());
 	}
 	
 	/**
 	 * retrieves all workouts available in db, and returns the List<QueryDocumentSnapshot>
+	 * @throws Exception 
 	 */
 	@Override
-	public List<QueryDocumentSnapshot> getAllWorkoutsFirebase() throws InvalidClassException, StreamCorruptedException,
-			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException {
+	public List<QueryDocumentSnapshot> getAllWorkoutsFirebase() throws Exception {
 
 		db = getDatabase();
 		ApiFuture<QuerySnapshot> query = db.collection("workouts").get();
 
 		QuerySnapshot querySnapshot = query.get();
 		List<QueryDocumentSnapshot> workouts = querySnapshot.getDocuments();
+		db.close();
 
 		return workouts;
 	}
@@ -131,22 +133,22 @@ public class AccesoDatos implements FirebaseDatosInterface {
 	/**
 	 * Returns an arraylist with all the workouts of the same level and lower that the currentUsers holds (hence we reload beforehand)
 	 * @return
-	 * @throws InvalidClassException
-	 * @throws StreamCorruptedException
-	 * @throws ClassNotFoundException
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 * @throws InterruptedException
-	 * @throws ExecutionException
+	 * @throws Exception 
 	 */
-	public ArrayList<Workout> getSameLowerLevelWorkouts() throws InvalidClassException, StreamCorruptedException, ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException{
+	public ArrayList<Workout> getSameLowerLevelWorkouts(int levelSearch) throws Exception{
 		
 		//reloadWorkout();
 		
 		ArrayList<Workout> historyWorkouts = new ArrayList<Workout>();
 		db = getDatabase();
-		ApiFuture<QuerySnapshot> query = db.collection("workouts").whereGreaterThanOrEqualTo("level", Login.currentUser.getLevel()).orderBy("level", Query.Direction.DESCENDING).get();
-
+		ApiFuture<QuerySnapshot> query = null;
+		if(levelSearch == -1)
+		{
+		query = db.collection("workouts").whereLessThanOrEqualTo("level", Login.currentUser.getLevel()).orderBy("level", Query.Direction.DESCENDING).get();
+		
+		}else {
+			 query = db.collection("workouts").whereEqualTo("level", levelSearch).orderBy("level", Query.Direction.DESCENDING).get();
+		}
 		QuerySnapshot querySnapshot = query.get();
 		List<QueryDocumentSnapshot> workouts = querySnapshot.getDocuments();
 		
@@ -154,7 +156,7 @@ public class AccesoDatos implements FirebaseDatosInterface {
 		{
 			historyWorkouts.add(getOneWorkout(workout.getReference()));
 		}
-		
+		db.close();
 		return historyWorkouts;
 	
 	}

@@ -13,7 +13,7 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 
 import objects.Workout;
 
-public interface FirebaseDatosInterface<T> {
+public interface FirebaseReaderInterface<T> {
 
 	
 	public List<T> findUsuariosFirebase() throws InvalidClassException,StreamCorruptedException , ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;
@@ -22,10 +22,10 @@ public interface FirebaseDatosInterface<T> {
 
 	public Workout getOneWorkout(DocumentReference docRef) throws InterruptedException, ExecutionException;
 
-	void reloadWorkout()  throws InterruptedException, ExecutionException;
+	void reloadWorkout()  throws InterruptedException, ExecutionException, IOException;
 
 	List<QueryDocumentSnapshot> getAllWorkoutsFirebase() throws InvalidClassException, StreamCorruptedException,
-			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;;
+			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException, Exception;;
 
 
 	
