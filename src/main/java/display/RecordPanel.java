@@ -37,7 +37,9 @@ public class RecordPanel extends AbstractPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String recordText = new Record().getRecordText();
-					textArea.setText(recordText);
+					int totalTime =new Record().getRecordsTotalTime();
+					Double accomplishment = new Record().getRecordsAcomplishment();
+					textArea.setText(recordText + "\nTOTAL TIME = " +totalTime + "\nAccomplishment= " + accomplishment);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

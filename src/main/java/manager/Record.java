@@ -74,7 +74,18 @@ public class Record {
 		return usuario;
 	}
 
+	public int getRecordsTotalTime() {
+int num =0;		
 
+for (HistoricalRecord record: Login.currentUser.getWk_history())
+{
+	num+=record.getTotalTime();
+}
+return num;
+	}
+
+	
+	
 	public String getRecordText() {
 String text =null;		
 
@@ -84,7 +95,17 @@ for (HistoricalRecord record: Login.currentUser.getWk_history())
 }
 return text;
 	}
-}
+
+
+	public Double getRecordsAcomplishment() throws Exception {
+	
+		
+		int availableWorkout = new Reader().getAllWorkoutsFirebase().size();
+		int completedWrokouts = getAllRecords().size();
+		
+		return (double) (completedWrokouts / availableWorkout);
+		
+}}
 		
 /*
 //		if (document.exists()) {
