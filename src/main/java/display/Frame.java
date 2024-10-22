@@ -34,6 +34,9 @@ public class Frame extends JFrame {
 	    LOGIN,
 	    REGISTER,
 	    WORKOUT,
+	    RECORDS,
+	    PROFILE,
+	    TRAINING,
 	  
 	}
 	
@@ -89,7 +92,29 @@ public class Frame extends JFrame {
 		contentPanel.add(workout);
 		panels.add(workout);
 		
+		//3
+		RecordPanel records = new RecordPanel(panels);
+		records.setVisible(false);
+		contentPanel.add(records);
+		panels.add(records);
+		
+		//4
+		ProfilePanel profile = new ProfilePanel(panels);
+		profile.setVisible(false);
+		contentPanel.add(profile);
+		panels.add(profile);
+		
+		//5
+				TrainingPanel training = new TrainingPanel(panels);
+				training.setVisible(false);
+				contentPanel.add(training);
+				panels.add(training);
+				
+				panelsvisibility(NamePanel.LOGIN, panels);
+		
+		
 		panelsvisibility(NamePanel.LOGIN, panels);
+		
 		
 	}
 	

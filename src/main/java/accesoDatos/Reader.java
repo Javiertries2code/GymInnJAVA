@@ -27,7 +27,9 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
 import manager.Login;
-import objects.Set;
+import objects.HistoricalRecord;
+import objects.Routine;
+import objects.Usuario;
 import objects.Workout;
 
 public class Reader implements FirebaseReaderInterface {
@@ -91,31 +93,57 @@ public class Reader implements FirebaseReaderInterface {
 		return usuarios;
 	}
 
-	
 	/**
-	 * realod the info of the users workouts, and current level, neccesary to make sure that we are using current data
-	 * Not working by now
-	 * @throws IOException 
+	 * this method is gonna RETURN THE WK0 WORKOUT, it would fail with a different
+	 * name
+	 * 
+	 * @param wkName
+	 * @return
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 */
+	public DocumentReference getWK0Reference() throws InterruptedException, ExecutionException {
+
+		DocumentReference wkRef = db.collection("workouts").document("wk0");
+		ApiFuture<DocumentSnapshot> query = wkRef.get();
+		DocumentSnapshot document = query.get();
+
+		if (document.exists()) {
+			return wkRef;
+		} else {
+			System.out.println("Documento no existe");
+			return null;
+		}
+	}
+
+	/**
+	 * realod the info of the users workouts, and current level, neccesary to make
+	 * sure that we are using current data Not working by now
+	 * 
+	 * @throws IOException
 	 *
 	 */
 	@Override
 	public void reloadWorkout() throws InterruptedException, ExecutionException, IOException {
 		db = getDatabase();
-		
-		ApiFuture<DocumentSnapshot> query =  db.collection("usuarios").document(Login.currentUser.getId()).get();
+
+		ApiFuture<DocumentSnapshot> query = db.collection("usuarios").document(Login.currentUser.getId()).get();
 		DocumentSnapshot document = query.get();
+
 		System.out.println("reloadWorkout BEFORE" + Login.currentUser.getLevel());
 
 		Login.currentUser.setLevel(((DocumentSnapshot) document.getData()).getDouble("level").intValue());
-		
+
 		DocumentReference wkRef = (DocumentReference) document.getData().get("ref_workouts");
 		Login.currentUser.setWorkout(new Reader().getOneWorkout(wkRef));
 		System.out.println("reloadWorkout AFTER" + Login.currentUser.getLevel());
 	}
-	
+
 	/**
-	 * retrieves all workouts available in db, and returns the List<QueryDocumentSnapshot>
-	 * @throws Exception 
+	 * retrieves all workouts available in db, and returns the
+	 * List<QueryDocumentSnapshot>
+	 * 
+	 * @throws Exception
 	 */
 	@Override
 	public List<QueryDocumentSnapshot> getAllWorkoutsFirebase() throws Exception {
@@ -129,47 +157,79 @@ public class Reader implements FirebaseReaderInterface {
 
 		return workouts;
 	}
+
+	public DocumentReference getOneLevelHigherWkRef(Integer levelSearch) throws Exception {
+
+		DocumentReference nextWkRef = null;
+
 	
-	/**
-	 * Returns an arraylist with all the workouts of the same level and lower that the currentUsers holds (hence we reload beforehand)
-	 * @return
-	 * @throws Exception 
-	 */
-	public ArrayList<Workout> getSameLowerLevelWorkouts(int levelSearch) throws Exception{
-		
-		//reloadWorkout();
-		
-		ArrayList<Workout> historyWorkouts = new ArrayList<Workout>();
 		db = getDatabase();
 		ApiFuture<QuerySnapshot> query = null;
-		if(levelSearch == -1)
-		{
-		query = db.collection("workouts").whereLessThanOrEqualTo("level", Login.currentUser.getLevel()).orderBy("level", Query.Direction.DESCENDING).get();
-		
-		}else {
-			 query = db.collection("workouts").whereEqualTo("level", levelSearch).orderBy("level", Query.Direction.DESCENDING).get();
+		if (levelSearch == -1) {
+			query = db.collection("workouts").whereEqualTo("level", (Login.currentUser.getLevel() + 1))
+					.orderBy("level", Query.Direction.ASCENDING).get();
+
+		} else {
+			query = db.collection("workouts").whereEqualTo("level", (levelSearch + 1))
+					.orderBy("level", Query.Direction.ASCENDING).get();
 		}
 		QuerySnapshot querySnapshot = query.get();
 		List<QueryDocumentSnapshot> workouts = querySnapshot.getDocuments();
-		
-		for(QueryDocumentSnapshot workout: workouts)
-		{
+		//we know there will be only one is db, as for current design
+		for (QueryDocumentSnapshot workout : workouts) {
+			nextWkRef = workout.getReference();
+		}
+		db.close();
+		return nextWkRef;
+
+	}
+	
+	/**
+	 * Returns an arraylist with all the workouts of the same level and lower that
+	 * the currentUsers holds (hence we reload beforehand)
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<Workout> getSameLowerLevelWorkouts(int levelSearch) throws Exception {
+
+		// reloadWorkout();
+
+		ArrayList<Workout> historyWorkouts = new ArrayList<Workout>();
+		db = getDatabase();
+		ApiFuture<QuerySnapshot> query = null;
+		if (levelSearch == -1) {
+			query = db.collection("workouts").whereLessThanOrEqualTo("level", Login.currentUser.getLevel())
+					.orderBy("level", Query.Direction.DESCENDING).get();
+
+		} else {
+			query = db.collection("workouts").whereEqualTo("level", levelSearch)
+					.orderBy("level", Query.Direction.DESCENDING).get();
+		}
+		QuerySnapshot querySnapshot = query.get();
+		List<QueryDocumentSnapshot> workouts = querySnapshot.getDocuments();
+
+		for (QueryDocumentSnapshot workout : workouts) {
 			historyWorkouts.add(getOneWorkout(workout.getReference()));
 		}
 		db.close();
 		return historyWorkouts;
-	
+
 	}
 
+	
+	/**
+	 * get aworkout containing all the reference sets
+	 */
 	@Override
 	public Workout getOneWorkout(DocumentReference docRef) throws InterruptedException, ExecutionException {
 
 		Workout workout = new Workout();
 
 		ApiFuture<DocumentSnapshot> future = docRef.get();
-		// block on response
+
 		DocumentSnapshot document = future.get();
-		ArrayList<Set> refSets = new ArrayList<Set>();
+		ArrayList<Routine> refSets = new ArrayList<Routine>();
 		ArrayList<DocumentReference> refSetsDoc = new ArrayList<DocumentReference>();
 
 		if (document.exists()) {
@@ -179,8 +239,9 @@ public class Reader implements FirebaseReaderInterface {
 			workout.setNumSets(document.getDouble("num_sets").intValue());
 			workout.setUrl(document.getString("url"));
 			workout.setRefSets(refSets);
-			//refSetsDoc = (ArrayList<DocumentReference>) document.getData().get("ref_sets");
-			
+			// refSetsDoc = (ArrayList<DocumentReference>)
+			// document.getData().get("ref_sets");
+
 			Map<String, Object> workoutUsuario = document.getData();
 			for (Map.Entry<String, Object> entry : workoutUsuario.entrySet()) {
 				// System.out.println(entry.getKey() + " => " + entry.getValue() +" " +
@@ -190,7 +251,6 @@ public class Reader implements FirebaseReaderInterface {
 					refSetsDoc = (ArrayList<DocumentReference>) entry.getValue();
 				}
 			}
-		
 
 		} else {
 			System.out.println("No such workout found!");
@@ -200,27 +260,77 @@ public class Reader implements FirebaseReaderInterface {
 			refSets.add(getSets(doc));
 
 		}
-		// just testing
-//		 for(Set set: workout.getRefSets())
-//			 System.out.println("new set added find one workout" + set.getName());
 
 		return workout;
 	}
 
-	public Set getSets(DocumentReference docRef) throws InterruptedException, ExecutionException {
+	/**
+	 * it retrieves all the info of a user, and packs it in a map to  be returned
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * @throws IOException
+	 */
+	public Map<String, Object> getCurrentUserDataMap() throws InterruptedException, ExecutionException, IOException {
+		// for testing
+		Firestore dB = Connection.getDatabase();
+		DocumentReference docRef = dB.collection("usuarios").document(Login.currentUser.getEmail());
+//		DocumentReference docRef = dB.collection("usuarios").document(Login.currentUser.getId());
+		Usuario usuario = new Usuario();
+		Map<String, Object> miUsuarioMap = null;
+		ApiFuture<DocumentSnapshot> future = docRef.get();
+
+		DocumentSnapshot document = future.get();
+		// ArrayList<HistoricalRecord> records = new ArrayList<HistoricalRecord>();
+		//ArrayList<DocumentReference> recordsDoc = new ArrayList<DocumentReference>();
+
+		if (document.exists()) {
+			miUsuarioMap = document.getData();
+			
+			miUsuarioMap.put("refTOUSer", docRef);
+			for (Map.Entry<String, Object> entry : miUsuarioMap.entrySet()) {
+				
+				System.out.println(entry.getKey() + " => " + entry.getValue());
+
+			}
+		} else {
+			System.out.println("No such usuario found!");
+		}
+
+		return miUsuarioMap;
+	}
+	
+	public HistoricalRecord getOneHistoricalRecord(DocumentReference docRef) throws InterruptedException, ExecutionException {
 
 		ApiFuture<DocumentSnapshot> future = docRef.get();
 		// block on response
 		DocumentSnapshot document = future.get();
-		Set set = null;
+		HistoricalRecord record = null;
 		if (document.exists()) {
 			// convert document to POJO
-			set = document.toObject(Set.class);
-			System.out.println(set.toString());
+			record = document.toObject(HistoricalRecord.class);
+			//System.out.println(record.toString());
+		} else {
+			System.out.println("No such record found!");
+		}
+
+		return record;
+	}
+
+	public Routine getSets(DocumentReference docRef) throws InterruptedException, ExecutionException {
+
+		ApiFuture<DocumentSnapshot> future = docRef.get();
+		// block on response
+		DocumentSnapshot document = future.get();
+		Routine routine = null;
+		if (document.exists()) {
+			// convert document to POJO
+			routine = document.toObject(Routine.class);
+			//System.out.println(routine.toString());
 		} else {
 			System.out.println("No such set found!");
 		}
 
-		return set;
+		return routine;
 	}
 }

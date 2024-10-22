@@ -2,34 +2,54 @@ package objects;
 
 import java.util.Objects;
 
-public class Set {
+public class Routine {
 
 	private String id;
 	private String name;
 	private String description;
 	private Integer time;
 	private Integer reps;
+	private Integer rest;
 
 
 	
-	public Set(String id, String name, String description, Integer time, Integer reps) {
+
+
+
+
+	public Routine(String id, String name, String description, Integer time, Integer reps, Integer rest) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.time = time;
 		this.reps = reps;
+		this.rest = rest;
 	}
 
 
 
-	public Set() {
+	public Routine() {
 		super();
 		this.id = "";
 		this.name = "name";
 		this.description = "description";
 		this.time = -1;
 		this.reps = -1;
+		this.rest = -1;
+		
+	}
+
+
+
+	public Integer getRest() {
+		return rest;
+	}
+
+
+
+	public void setRest(Integer rest) {
+		this.rest = rest;
 	}
 
 
@@ -96,15 +116,15 @@ public class Set {
 
 	@Override
 	public String toString() {
-		return "Set [id=" + id + ", name=" + name + ", description=" + description + ", time=" + time + ", reps=" + reps
-				+ "]";
+		return "Routine [id=" + id + ", name=" + name + ", description=" + description + ", time=" + time + ", reps="
+				+ reps + ", rest=" + rest + "]";
 	}
 
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, name, reps, time);
+		return Objects.hash(description, id, name, reps, rest, time);
 	}
 
 
@@ -117,10 +137,10 @@ public class Set {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Set other = (Set) obj;
+		Routine other = (Routine) obj;
 		return Objects.equals(description, other.description) && Objects.equals(id, other.id)
 				&& Objects.equals(name, other.name) && Objects.equals(reps, other.reps)
-				&& Objects.equals(time, other.time);
+				&& Objects.equals(rest, other.rest) && Objects.equals(time, other.time);
 	}
 
 	

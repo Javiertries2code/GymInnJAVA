@@ -10,11 +10,11 @@ public class Workout {
 	private String name;
 	private Integer level;
 	private Integer numSets;
-	private ArrayList<Set> refSets;
+	private ArrayList<Routine> refSets;
 	private String url;
 	
 
-	public Workout(String id, String name, Integer level, Integer numSets, ArrayList<Set> refSets, String url) {
+	public Workout(String id, String name, Integer level, Integer numSets, ArrayList<Routine> refSets, String url) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -62,10 +62,10 @@ public class Workout {
 	}
 
 
-	public ArrayList<Set> getRefSets() {
+	public ArrayList<Routine> getRefSets() {
 		return refSets;
 	}
-	public void setRefSets(ArrayList<Set> refSets) {
+	public void setRefSets(ArrayList<Routine> refSets) {
 		this.refSets = refSets;
 	}
 	public String getUrl() {

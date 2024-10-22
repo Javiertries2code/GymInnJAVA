@@ -17,12 +17,12 @@ public class Usuario {
 	private Integer progress;
 	private boolean isTrainer; 
 	private Workout workout;
-	private ArrayList<Workout> wk_history;
+	private ArrayList<HistoricalRecord> wk_history;
 	
 
 	public Usuario(String id, String name, String surname, String birthday, String password, String email,
 			boolean registered, Integer level, Integer progress, boolean isTrainer, Workout workout,
-			ArrayList<Workout> wk_history) {
+			ArrayList<HistoricalRecord> wk_history) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -70,6 +70,8 @@ public class Usuario {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
 	public String getSurname() {
 		return surname;
 	}
@@ -118,10 +120,10 @@ public class Usuario {
 	public void setWorkout(Workout workout) {
 		this.workout = workout;
 	}
-	public ArrayList<Workout> getWk_history() {
+	public ArrayList<HistoricalRecord> getWk_history() {
 		return wk_history;
 	}
-	public void setWk_history(ArrayList<Workout> wk_history) {
+	public void setWk_history(ArrayList<HistoricalRecord> wk_history) {
 		this.wk_history = wk_history;
 	}
 	@Override

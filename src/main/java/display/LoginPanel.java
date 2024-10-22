@@ -18,6 +18,9 @@ import java.util.List;
 import display.*;
 import display.Frame.NamePanel;
 import manager.Login;
+import manager.UserInfo;
+
+import java.awt.Font;
 
 public class LoginPanel extends AbstractPanel {
 
@@ -25,7 +28,7 @@ public class LoginPanel extends AbstractPanel {
 	private JTextField textFieldUser;
 	private JTextField textFieldPassword;
 	private JButton btnRegister;
-
+	
 	/**
 	 * Create the panel.
 	 */
@@ -44,8 +47,8 @@ public class LoginPanel extends AbstractPanel {
 
 		// TO-DO
 		// must be removed, this is for quick entry while coding
-		textFieldUser.setText("juan@juanez.com");
-		textFieldPassword.setText("password1");
+		textFieldUser.setText("email10");
+		textFieldPassword.setText("Password");
 
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(225, 322, 89, 23);
@@ -56,6 +59,7 @@ public class LoginPanel extends AbstractPanel {
 				try {
 
 					if ((new Login().verifyUser(textFieldUser.getText(), textFieldPassword.getText())) == true) {
+						new UserInfo().loadRecordsQuick();
 						new Frame().panelsvisibility(NamePanel.WORKOUT, panels);
 					} else {
 						JOptionPane.showMessageDialog(null, "Incorrect user or password");
@@ -80,6 +84,7 @@ public class LoginPanel extends AbstractPanel {
 		});
 		btnRegister.setBounds(225, 370, 89, 23);
 		add(btnRegister);
+		
 
 	}
 }
