@@ -9,10 +9,14 @@ import javax.swing.JPanel;
 
 import manager.Record;
 import objects.Usuario;
+import javax.swing.JTextArea;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 
-public class TrainingPanel extends JPanel {
+public class TrainingPanel extends AbstractPanel {
 
 	private static final long serialVersionUID = 1L;
+	private JTable table;
 
 	/**
 	 * Create the panel.
@@ -31,11 +35,23 @@ public class TrainingPanel extends JPanel {
 				
 			}
 		});
-		btnNewRecord.setBounds(383, 40, 89, 23);
+		btnNewRecord.setBounds(243, 442, 201, 47);
 		add(btnNewRecord);
+		
+		JTextArea textDescription = new JTextArea();
+		textDescription.setBounds(228, 41, 183, 40);
+		add(textDescription);
+		
+		JLabel lblRoutine = new JLabel("routine name");
+		lblRoutine.setBounds(268, 11, 108, 23);
+		add(lblRoutine);
+		
+	
+		JLabel lblWorkout = new JLabel("Workout name");
+		lblWorkout.setBounds(507, 11, 108, 23);
+		add(lblWorkout);
 		
 		
 
 	}
-
 }

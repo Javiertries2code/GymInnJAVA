@@ -10,10 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import display.Frame.NamePanel;
-import manager.Login;
 import manager.Record;
-import objects.Usuario;
 
 public class RecordPanel extends AbstractPanel {
 
@@ -55,7 +52,7 @@ public class RecordPanel extends AbstractPanel {
 		btnNewButton = new JButton("Workouts");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Frame().panelsvisibility(NamePanel.WORKOUT, panels);
+			panelsvisibility(NamePanel.WORKOUT, panels);
 			}
 		});
 		btnNewButton.setBackground(new Color(128, 128, 128));
@@ -66,7 +63,7 @@ public class RecordPanel extends AbstractPanel {
 		btnNewButton_1 = new JButton("Profile");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Frame().panelsvisibility(NamePanel.PROFILE, panels);
+				panelsvisibility(NamePanel.PROFILE, panels);
 
 			}
 		});
@@ -78,7 +75,7 @@ public class RecordPanel extends AbstractPanel {
 		btnHistoric = new JButton("Historic records");
 		btnHistoric.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Frame().panelsvisibility(NamePanel.RECORDS, panels);
+				panelsvisibility(NamePanel.RECORDS, panels);
 
 			}
 		});

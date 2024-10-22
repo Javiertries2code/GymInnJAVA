@@ -212,7 +212,9 @@ public class Reader implements FirebaseReaderInterface {
 		for (QueryDocumentSnapshot workout : workouts) {
 			historyWorkouts.add(getOneWorkout(workout.getReference()));
 		}
-		db.close();
+		
+	//	Se tiene que cerrar pero como no la abre, lo dejo asi de momento, luego lo arreglo
+		//db.close();
 		return historyWorkouts;
 
 	}

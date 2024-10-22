@@ -16,7 +16,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import display.*;
-import display.Frame.NamePanel;
+
 import manager.Login;
 import manager.UserInfo;
 
@@ -60,7 +60,7 @@ public class LoginPanel extends AbstractPanel {
 
 					if ((new Login().verifyUser(textFieldUser.getText(), textFieldPassword.getText())) == true) {
 						new UserInfo().loadRecordsQuick();
-						new Frame().panelsvisibility(NamePanel.WORKOUT, panels);
+						panelsvisibility(NamePanel.WORKOUT, panels);
 					} else {
 						JOptionPane.showMessageDialog(null, "Incorrect user or password");
 						textFieldUser.setText("Try again");
@@ -78,7 +78,7 @@ public class LoginPanel extends AbstractPanel {
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				new Frame().panelsvisibility(NamePanel.REGISTER, panels);
+				panelsvisibility(NamePanel.REGISTER, panels);
 
 			}
 		});

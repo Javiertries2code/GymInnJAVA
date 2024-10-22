@@ -1,31 +1,19 @@
 package display;
 
-import javax.swing.JPanel;
-
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-
-import accesoDatos.Reader;
-import display.Frame.NamePanel;
-import manager.Register;
-import objects.Usuario;
-
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InvalidClassException;
-import java.io.StreamCorruptedException;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerListModel;
-import javax.swing.JSpinner;
 
-import java.awt.Color;
-import java.awt.Font;
+import manager.Register;
+import objects.Usuario;
 
 
 public class RegisterPanel extends AbstractPanel {
@@ -77,13 +65,13 @@ public class RegisterPanel extends AbstractPanel {
 		textFieldEmail.setBounds(361, 307, 86, 20);
 		add(textFieldEmail);
 		
-		   String[] options = {"false","true" };
-	        SpinnerListModel spinnerModel = new SpinnerListModel(options);
+	    String[] options = {"false","true" };
+        SpinnerListModel spinnerModel = new SpinnerListModel(options);
 
-	     
-	        JSpinner spinner = new JSpinner(spinnerModel);
-	        spinner.setBounds(361, 338, 93, 20);
-	        add(spinner);
+     
+        JSpinner spinner = new JSpinner(spinnerModel);
+        spinner.setBounds(361, 338, 93, 20);
+        add(spinner);
 		
 		JButton btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
@@ -105,7 +93,7 @@ public class RegisterPanel extends AbstractPanel {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						new Frame().panelsvisibility(NamePanel.LOGIN, panels);
+						panelsvisibility(NamePanel.LOGIN, panels);
 
 				
 				}

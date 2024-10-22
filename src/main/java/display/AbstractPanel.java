@@ -1,35 +1,22 @@
 package display;
 
 import java.awt.Color;
-
-import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import javax.swing.JTextField;
-
-import display.Frame.NamePanel;
-import manager.Login;
-import manager.UserInfo;
-import manager.Workouts;
-import objects.Workout;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InvalidClassException;
-import java.io.StreamCorruptedException;
-import java.awt.event.ActionEvent;
-import display.Frame;
+import manager.Login;
 
-
-public abstract class AbstractPanel  extends JPanel  
-{
+public abstract class AbstractPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+
+	public enum NamePanel {
+		LOGIN, REGISTER, WORKOUT, RECORDS, PROFILE, TRAINING,
+	}
 
 	/**
 	 * Create the panel.
@@ -38,8 +25,18 @@ public abstract class AbstractPanel  extends JPanel
 		setBounds(0, 0, 650, 500);
 		setBackground(new Color(255, 128, 128));
 		setLayout(null);
-		
+
 		
 
 	}
+
+	public  void panelsvisibility(NamePanel panelName, List<JPanel> panels2) {
+		for (int i = 0; i < panels2.size(); i++) {
+			if (i == panelName.ordinal())
+				panels2.get(i).setVisible(true);
+			else
+				panels2.get(i).setVisible(false);
+		}
+	}
+	
 }

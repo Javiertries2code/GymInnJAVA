@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerListModel;
 import javax.swing.table.DefaultTableModel;
 
-import display.Frame.NamePanel;
+
 import manager.Workouts;
 import objects.Workout;
 import javax.swing.JLabel;
@@ -84,7 +84,7 @@ public class WorkoutPanel extends AbstractPanel {
 				btnNewButton = new JButton("Workouts");
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						new Frame().panelsvisibility(NamePanel.WORKOUT, panels);
+					panelsvisibility(NamePanel.WORKOUT, panels);
 					}
 				});
 				btnNewButton.setBackground(new Color(128, 128, 128));
@@ -95,7 +95,7 @@ public class WorkoutPanel extends AbstractPanel {
 				btnNewButton_1 = new JButton("Profile");
 				btnNewButton_1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						new Frame().panelsvisibility(NamePanel.PROFILE, panels);
+				panelsvisibility(NamePanel.PROFILE, panels);
 
 					}
 				});
@@ -107,7 +107,7 @@ public class WorkoutPanel extends AbstractPanel {
 				btnHistoric = new JButton("Historic records");
 				btnHistoric.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						new Frame().panelsvisibility(NamePanel.RECORDS, panels);
+						panelsvisibility(NamePanel.RECORDS, panels);
 
 					}
 				});
@@ -124,7 +124,7 @@ public class WorkoutPanel extends AbstractPanel {
 				btnStartTraining = new JButton("START");
 				btnStartTraining.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						new Frame().panelsvisibility(NamePanel.TRAINING, panels);
+					panelsvisibility(NamePanel.TRAINING, panels);
 
 					}
 				});
