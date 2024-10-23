@@ -48,7 +48,7 @@ public class LoginPanel extends AbstractPanel {
 		// TO-DO
 		// must be removed, this is for quick entry while coding
 		textFieldUser.setText("email10");
-		textFieldPassword.setText("Password");
+		textFieldPassword.setText("123");
 
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setBounds(225, 322, 89, 23);

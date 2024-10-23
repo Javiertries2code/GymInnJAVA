@@ -1,13 +1,20 @@
 package display;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -16,10 +23,11 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerListModel;
 import javax.swing.table.DefaultTableModel;
 
-
+import manager.Login;
 import manager.Workouts;
 import objects.Workout;
-import javax.swing.JLabel;
+import objects.*;
+import thread.Chrono;
 
 public class WorkoutPanel extends AbstractPanel {
 
@@ -32,6 +40,7 @@ public class WorkoutPanel extends AbstractPanel {
 	private JButton btnNewButton_3;
 	private JLabel lblNewLabel;
 	private JButton btnStartTraining;
+	private Thread chronometer = null;
 
 	/**
 	 * Create the panel.
@@ -39,7 +48,7 @@ public class WorkoutPanel extends AbstractPanel {
 	public WorkoutPanel(List<JPanel> panels) {
 		
 		JScrollPane scrollWorkouts = new JScrollPane();
-		scrollWorkouts.setBounds(44, 216, 524, 200);
+		scrollWorkouts.setBounds(44, 338, 524, 78);
 		add(scrollWorkouts);
 
 		// creating model fro table of most liked
@@ -89,7 +98,7 @@ public class WorkoutPanel extends AbstractPanel {
 				});
 				btnNewButton.setBackground(new Color(128, 128, 128));
 				btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-				btnNewButton.setBounds(10, 132, 142, 38);
+				btnNewButton.setBounds(337, 12, 120, 20);
 				add(btnNewButton);
 				
 				btnNewButton_1 = new JButton("Profile");
@@ -101,7 +110,7 @@ public class WorkoutPanel extends AbstractPanel {
 				});
 				btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 				btnNewButton_1.setBackground(Color.GRAY);
-				btnNewButton_1.setBounds(10, 11, 142, 38);
+				btnNewButton_1.setBounds(10, 11, 110, 23);
 				add(btnNewButton_1);
 				
 				btnHistoric = new JButton("Historic records");
@@ -113,7 +122,7 @@ public class WorkoutPanel extends AbstractPanel {
 				});
 				btnHistoric.setFont(new Font("Tahoma", Font.PLAIN, 16));
 				btnHistoric.setBackground(Color.GRAY);
-				btnHistoric.setBounds(10, 72, 142, 38);
+				btnHistoric.setBounds(155, 9, 148, 20);
 				add(btnHistoric);
 				
 				lblNewLabel = new JLabel("Filter");
@@ -131,7 +140,66 @@ public class WorkoutPanel extends AbstractPanel {
 				btnStartTraining.setBounds(444, 437, 110, 52);
 				add(btnStartTraining);
 				
-			
+		
+				
+				JPanel panel = new JPanel();
+				LayoutManager layout = new GridLayout(6, 2);
+				panel.setLayout(null);
+				panel.setBounds(10, 86, 400, 80);
+				panel.setBorder(BorderFactory.createTitledBorder("Timers"));
+
+				NumberFormat chronoFormat = NumberFormat.getNumberInstance();
+				
+				
+				Component chronoTextField = new JFormattedTextField(chronoFormat);
+				chronoTextField.setBounds(10, 39, 109, 30);
+				
+				chronoTextField.setVisible(true);
+				chronoTextField.setName("Chronometer");
+				((JTextField) chronoTextField).setColumns(10);
+				
+				((JFormattedTextField) chronoTextField).setValue(0);
+				
+				JLabel chronoLabel = new JLabel("Chronometer Workout");
+				chronoLabel.setVisible(true);
+				chronoLabel.setBounds(10, 11, 109, 30);
+				chronoLabel.setLabelFor(chronoTextField);
+				panel.add(chronoLabel);
+				panel.add(chronoTextField);
+				
+				NumberFormat countDownFormat = NumberFormat.getNumberInstance();
+				add(panel);
+				
+				Component countDownTextField = new JFormattedTextField(countDownFormat);
+				countDownTextField.setBounds(150, 39, 109, 30);
+				
+				countDownTextField.setVisible(true);
+				countDownTextField.setName("Countdown");
+				((JTextField) countDownTextField).setColumns(10);
+				((JFormattedTextField) countDownTextField).setValue(0);
+				
+				JLabel countDownLabel = new JLabel("CountDown Routine:");
+				countDownLabel.setVisible(true);
+				countDownLabel.setBounds(150, 11, 109, 30);
+				countDownLabel.setLabelFor(countDownTextField);
+				panel.add(countDownLabel);
+				panel.add(countDownTextField);
+				//CREATING THREAD
+				   chronometer = new Chrono(countDownTextField, chronoTextField, new ArrayList<Routine>() );
+
+				JButton btnNewButton = new JButton("Start Stop");
+				btnNewButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+
+						if (chronometer.isAlive())
+							((Chrono) chronometer).startStop();
+							else
+								chronometer.start();
+					}
+				});
+				btnNewButton.setBounds(20, 42, 79, 29);
+				add(btnNewButton);
 
 		
 	}
