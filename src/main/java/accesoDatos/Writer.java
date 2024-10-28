@@ -63,7 +63,7 @@ public class Writer {
 	}
 	
 
-	public void addUser(Usuario usuario) throws Exception {
+	/*public void addUser(Usuario usuario) throws Exception {
 
 		Firestore db = Connection.getDatabase();
 
@@ -83,9 +83,9 @@ public class Writer {
 		    }
 
 		db.close();
-	}
+	}*/
 
-	/*public void addUser(Usuario usuario) throws Exception {
+	public void addUser(Usuario usuario) throws Exception {
 		
 		Firestore db = Connection.getDatabase();
 		
@@ -111,8 +111,10 @@ public class Writer {
 		
 		userNew.set(user);
 		
-		db.close();
-	}*/
+		//db.close();
+	}
+	
+	
 	public void addSets( Routine usuario) throws Exception {
 	
 		 
@@ -134,7 +136,7 @@ public class Writer {
 
 		userNew.set(user);
 
-		db.close();
+		//db.close();
 	}
 	
 }

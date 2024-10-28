@@ -21,7 +21,7 @@ public class Record {
 	 */
 	public ArrayList<HistoricalRecord>getAllRecords() throws Exception {
 		ArrayList<HistoricalRecord> recordsList= new ArrayList<HistoricalRecord>();
-		ArrayList<DocumentReference> newRecordsDoc= null;
+		ArrayList<DocumentReference> newRecordsDoc= new ArrayList<DocumentReference>();
 		HistoricalRecord newRecord =  new HistoricalRecord();
 
 		Map<String, Object> miUsuarioMap = new Reader().getCurrentUserDataMap();

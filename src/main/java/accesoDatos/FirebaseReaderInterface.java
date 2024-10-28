@@ -16,11 +16,11 @@ import objects.Workout;
 public interface FirebaseReaderInterface<T> {
 
 	
-	public List<T> findUsuariosFirebase() throws InvalidClassException,StreamCorruptedException , ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException;
+	public List<T> findUsuariosFirebase() throws InvalidClassException,StreamCorruptedException , ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException, Exception;
 
 
 
-	public Workout getOneWorkout(DocumentReference docRef) throws InterruptedException, ExecutionException;
+	public Workout getOneWorkout(DocumentReference docRef) throws InterruptedException, ExecutionException, IOException;
 
 	void reloadWorkout()  throws InterruptedException, ExecutionException, IOException;
 

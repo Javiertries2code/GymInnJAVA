@@ -2,8 +2,6 @@ package accesoDatos;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InvalidClassException;
-import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,7 +33,7 @@ import objects.Workout;
 public class Reader implements FirebaseReaderInterface {
 
 	private static Firestore db = null;
-	private static final String FIREBASE_JASON = "C:\\Users\\Javier\\eclipse-workspace\\GymInn\\gymconection.json";
+	private static final String FIREBASE_JASON = "../GymInn/gymconection.json";
 
 	/**
 	 * Singleton to stablish, if not yet running, a connection to the Firebase db
@@ -76,20 +74,22 @@ public class Reader implements FirebaseReaderInterface {
 
 	/**
 	 * Retrieves a List<QueryDocumentSnapshot> with the users
+	 * 
+	 * @throws Exception
 	 */
 
 	// TO-DO Make it genereric as to retrieve and return any tipe of entity provided
 	// as a param
 	@Override
-	public List<QueryDocumentSnapshot> findUsuariosFirebase() throws InvalidClassException, StreamCorruptedException,
-			ClassNotFoundException, FileNotFoundException, IOException, InterruptedException, ExecutionException {
+	public List<QueryDocumentSnapshot> findUsuariosFirebase() throws Exception {
 
-		db = getDatabase();
+		Firestore db = Connection.getDatabase();
+
 		ApiFuture<QuerySnapshot> query = db.collection("usuarios").get();
 
 		QuerySnapshot querySnapshot = query.get();
 		List<QueryDocumentSnapshot> usuarios = querySnapshot.getDocuments();
-
+		//db.close();
 		return usuarios;
 	}
 
@@ -101,8 +101,10 @@ public class Reader implements FirebaseReaderInterface {
 	 * @return
 	 * @throws ExecutionException
 	 * @throws InterruptedException
+	 * @throws IOException
 	 */
-	public DocumentReference getWK0Reference() throws InterruptedException, ExecutionException {
+	public DocumentReference getWK0Reference() throws InterruptedException, ExecutionException, IOException {
+		Firestore db = Connection.getDatabase();
 
 		DocumentReference wkRef = db.collection("workouts").document("wk0");
 		ApiFuture<DocumentSnapshot> query = wkRef.get();
@@ -125,7 +127,7 @@ public class Reader implements FirebaseReaderInterface {
 	 */
 	@Override
 	public void reloadWorkout() throws InterruptedException, ExecutionException, IOException {
-		db = getDatabase();
+		Firestore db = Connection.getDatabase();
 
 		ApiFuture<DocumentSnapshot> query = db.collection("usuarios").document(Login.currentUser.getId()).get();
 		DocumentSnapshot document = query.get();
@@ -148,12 +150,13 @@ public class Reader implements FirebaseReaderInterface {
 	@Override
 	public List<QueryDocumentSnapshot> getAllWorkoutsFirebase() throws Exception {
 
-		db = getDatabase();
+		Firestore db = Connection.getDatabase();
+
 		ApiFuture<QuerySnapshot> query = db.collection("workouts").get();
 
 		QuerySnapshot querySnapshot = query.get();
 		List<QueryDocumentSnapshot> workouts = querySnapshot.getDocuments();
-		db.close();
+		//db.close();
 
 		return workouts;
 	}
@@ -162,8 +165,8 @@ public class Reader implements FirebaseReaderInterface {
 
 		DocumentReference nextWkRef = null;
 
-	
-		db = getDatabase();
+		Firestore db = Connection.getDatabase();
+
 		ApiFuture<QuerySnapshot> query = null;
 		if (levelSearch == -1) {
 			query = db.collection("workouts").whereEqualTo("level", (Login.currentUser.getLevel() + 1))
@@ -175,7 +178,7 @@ public class Reader implements FirebaseReaderInterface {
 		}
 		QuerySnapshot querySnapshot = query.get();
 		List<QueryDocumentSnapshot> workouts = querySnapshot.getDocuments();
-		//we know there will be only one is db, as for current design
+		// we know there will be only one is db, as for current design
 		for (QueryDocumentSnapshot workout : workouts) {
 			nextWkRef = workout.getReference();
 		}
@@ -183,7 +186,7 @@ public class Reader implements FirebaseReaderInterface {
 		return nextWkRef;
 
 	}
-	
+
 	/**
 	 * Returns an arraylist with all the workouts of the same level and lower that
 	 * the currentUsers holds (hence we reload beforehand)
@@ -196,7 +199,8 @@ public class Reader implements FirebaseReaderInterface {
 		// reloadWorkout();
 
 		ArrayList<Workout> historyWorkouts = new ArrayList<Workout>();
-		db = getDatabase();
+		Firestore db = Connection.getDatabase();
+
 		ApiFuture<QuerySnapshot> query = null;
 		if (levelSearch == -1) {
 			query = db.collection("workouts").whereLessThanOrEqualTo("level", Login.currentUser.getLevel())
@@ -212,20 +216,23 @@ public class Reader implements FirebaseReaderInterface {
 		for (QueryDocumentSnapshot workout : workouts) {
 			historyWorkouts.add(getOneWorkout(workout.getReference()));
 		}
-		
-	//	Se tiene que cerrar pero como no la abre, lo dejo asi de momento, luego lo arreglo
-		//db.close();
+
+		// Se tiene que cerrar pero como no la abre, lo dejo asi de momento, luego lo
+		// arreglo
+		// db.close();
 		return historyWorkouts;
 
 	}
 
-	
 	/**
 	 * get aworkout containing all the reference sets
+	 * 
+	 * @throws IOException
 	 */
 	@Override
-	public Workout getOneWorkout(DocumentReference docRef) throws InterruptedException, ExecutionException {
-
+	public Workout getOneWorkout(DocumentReference docRef)
+			throws InterruptedException, ExecutionException, IOException {
+		Firestore db = Connection.getDatabase();
 		Workout workout = new Workout();
 
 		ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -267,13 +274,12 @@ public class Reader implements FirebaseReaderInterface {
 	}
 
 	/**
-	 * it retrieves all the info of a user, and packs it in a map to  be returned
+	 * it retrieves all the info of a user, and packs it in a map to be returned
+	 * 
 	 * @return
-	 * @throws InterruptedException
-	 * @throws ExecutionException
-	 * @throws IOException
+	 * @throws Exception
 	 */
-	public Map<String, Object> getCurrentUserDataMap() throws InterruptedException, ExecutionException, IOException {
+	public Map<String, Object> getCurrentUserDataMap() throws Exception {
 		// for testing
 		Firestore dB = Connection.getDatabase();
 		DocumentReference docRef = dB.collection("usuarios").document(Login.currentUser.getEmail());
@@ -284,25 +290,26 @@ public class Reader implements FirebaseReaderInterface {
 
 		DocumentSnapshot document = future.get();
 		// ArrayList<HistoricalRecord> records = new ArrayList<HistoricalRecord>();
-		//ArrayList<DocumentReference> recordsDoc = new ArrayList<DocumentReference>();
+		// ArrayList<DocumentReference> recordsDoc = new ArrayList<DocumentReference>();
 
 		if (document.exists()) {
 			miUsuarioMap = document.getData();
-			
+
 			miUsuarioMap.put("refTOUSer", docRef);
 			for (Map.Entry<String, Object> entry : miUsuarioMap.entrySet()) {
-				
+
 				System.out.println(entry.getKey() + " => " + entry.getValue());
 
 			}
 		} else {
 			System.out.println("No such usuario found!");
 		}
-
+	//	dB.close();
 		return miUsuarioMap;
 	}
-	
-	public HistoricalRecord getOneHistoricalRecord(DocumentReference docRef) throws InterruptedException, ExecutionException {
+
+	public HistoricalRecord getOneHistoricalRecord(DocumentReference docRef)
+			throws InterruptedException, ExecutionException {
 
 		ApiFuture<DocumentSnapshot> future = docRef.get();
 		// block on response
@@ -311,7 +318,7 @@ public class Reader implements FirebaseReaderInterface {
 		if (document.exists()) {
 			// convert document to POJO
 			record = document.toObject(HistoricalRecord.class);
-			//System.out.println(record.toString());
+			// System.out.println(record.toString());
 		} else {
 			System.out.println("No such record found!");
 		}
@@ -328,7 +335,7 @@ public class Reader implements FirebaseReaderInterface {
 		if (document.exists()) {
 			// convert document to POJO
 			routine = document.toObject(Routine.class);
-			//System.out.println(routine.toString());
+			// System.out.println(routine.toString());
 		} else {
 			System.out.println("No such set found!");
 		}
