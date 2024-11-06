@@ -1,11 +1,16 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Workout {
+public class Workout implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 413672173895136893L;
 	private String id;
 	private String name;
 	private Integer level;
