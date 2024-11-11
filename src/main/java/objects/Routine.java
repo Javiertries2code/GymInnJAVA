@@ -1,9 +1,14 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Routine {
+public class Routine implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6085082963833012592L;
 	private String id;
 	private String name;
 	private String description;
