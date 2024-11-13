@@ -3,6 +3,7 @@ package objects;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Workout implements Serializable{
@@ -71,7 +72,7 @@ public class Workout implements Serializable{
 		return refSets;
 	}
 	public void setRefSets(ArrayList<Routine> refSets) {
-		this.refSets = refSets;
+	    this.refSets = refSets;
 	}
 	public String getUrl() {
 		return url;
