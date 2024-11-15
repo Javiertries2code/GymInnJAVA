@@ -27,7 +27,7 @@ import manager.Login;
 import manager.Workouts;
 import objects.Workout;
 import objects.*;
-import thread.Chrono;
+import thread.*;
 
 public class WorkoutPanel extends AbstractPanel {
 
@@ -41,6 +41,7 @@ public class WorkoutPanel extends AbstractPanel {
 	private JLabel lblNewLabel;
 	private JButton btnStartTraining;
 	private Thread chronometer = null;
+	private Countdown countdown = null;
 
 	/**
 	 * Create the panel.
@@ -188,10 +189,14 @@ public class WorkoutPanel extends AbstractPanel {
 				panel.add(countDownTextField);
 				//CREATING THREAD
 				   chronometer = new Chrono(countDownTextField, chronoTextField, new ArrayList<Routine>() );
-
+				   countdown = new Countdown(countDownTextField, chronoTextField, new ArrayList<Routine>() );
 				JButton btnNewButton = new JButton("Start Stop");
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if ((countdown).isAlive())
+							((Countdown) countdown).startStop();
+							else
+								countdown.start();
 						
 
 						if (chronometer.isAlive())

@@ -36,12 +36,12 @@ public class LoginPanel extends AbstractPanel {
 		setLayout(null);
 
 		textFieldUser = new JTextField();
-		textFieldUser.setBounds(228, 208, 86, 20);
+		textFieldUser.setBounds(340, 197, 86, 20);
 		add(textFieldUser);
 		textFieldUser.setColumns(10);
 
 		textFieldPassword = new JTextField();
-		textFieldPassword.setBounds(228, 262, 86, 20);
+		textFieldPassword.setBounds(340, 251, 86, 20);
 		add(textFieldPassword);
 		textFieldPassword.setColumns(10);
 
@@ -51,7 +51,7 @@ public class LoginPanel extends AbstractPanel {
 		textFieldPassword.setText("123");
 
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(225, 322, 89, 23);
+		btnLogin.setBounds(337, 311, 89, 23);
 		btnLogin.setForeground(Color.RED);
 		btnLogin.setBackground(Color.BLACK);
 		btnLogin.addActionListener(new ActionListener() {
@@ -82,7 +82,7 @@ public class LoginPanel extends AbstractPanel {
 
 			}
 		});
-		btnRegister.setBounds(225, 370, 89, 23);
+		btnRegister.setBounds(337, 359, 89, 23);
 		add(btnRegister);
 		
 
