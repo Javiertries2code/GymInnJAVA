@@ -1,8 +1,5 @@
 package manager;
 
-import java.util.List;
-
-import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 
 import accesoDatos.Reader;
