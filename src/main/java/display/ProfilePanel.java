@@ -28,6 +28,7 @@ public class ProfilePanel extends AbstractPanel {
 		btnNewButton = new JButton("Workouts");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				panelsvisibility(NamePanel.WORKOUT, panels);
 			}
 		});
@@ -44,6 +45,7 @@ public class ProfilePanel extends AbstractPanel {
 		btnNewButton_1.setBounds(34, 87, 142, 38);
 		add(btnNewButton_1);
 
+
 		btnHistoric = new JButton("Historic records");
 		btnHistoric.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -51,6 +53,7 @@ public class ProfilePanel extends AbstractPanel {
 
 			}
 		});
+
 		btnHistoric.setBounds(34, 148, 142, 38);
 		add(btnHistoric);
 
@@ -63,13 +66,12 @@ public class ProfilePanel extends AbstractPanel {
 			public void actionPerformed(ActionEvent e) {
 
 
+
 			}
 		});
 		btnNewButton_2.setBounds(279, 53, 155, 23);
 		add(btnNewButton_2);
 
-
-
-
 	}
 }
+

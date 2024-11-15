@@ -33,7 +33,9 @@ import objects.Workout;
 public class Reader implements FirebaseReaderInterface {
 
 	private static Firestore db = null;
-	private static final String FIREBASE_JASON = "C:\\Users\\admin\\eclipse-workspace\\GymInnJAVA-main\\gymconection.json";
+
+	private static final String FIREBASE_JASON = "../GymInn/gymconection.json";
+
 
 	/**
 	 * Singleton to stablish, if not yet running, a connection to the Firebase db
@@ -67,7 +69,10 @@ public class Reader implements FirebaseReaderInterface {
 				.setProjectId("gyminn-389ca").setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
 
 		db = firestoreOptions.getService();
-		
+
+		if (db == null)
+			System.out.println("got null in getConnection");
+
 
 	}
 
@@ -112,14 +117,12 @@ public class Reader implements FirebaseReaderInterface {
 		if (document.exists()) {
 			return wkRef;
 		} else {
-			
+
+			System.out.println("Documento no existe");
 			return null;
 		}
 	}
-	
-	
-	
-	
+
 
 	/**
 	 * realod the info of the users workouts, and current level, neccesary to make
@@ -128,17 +131,20 @@ public class Reader implements FirebaseReaderInterface {
 	 * @throws IOException
 	 *
 	 */
-	@Override
-	public   void reloadWorkout() throws InterruptedException, ExecutionException, IOException {
+
+	public void reloadWorkout() throws InterruptedException, ExecutionException, IOException {
+
 		Firestore db = Connection.getDatabase();
 
 		ApiFuture<DocumentSnapshot> query = db.collection("usuarios").document(Login.currentUser.getId()).get();
 		DocumentSnapshot document = query.get();
 
+
 		Login.currentUser.setLevel(((DocumentSnapshot) document.getData()).getDouble("level").intValue());
 
 		DocumentReference wkRef = (DocumentReference) document.getData().get("ref_workouts");
 		Login.currentUser.setWorkout(new Reader().getOneWorkout(wkRef));
+
 	}
 
 	/**
@@ -224,6 +230,7 @@ public class Reader implements FirebaseReaderInterface {
 
 	}
 
+
 	public DocumentReference getWorkoutReferenceByName(String workoutName) throws ExecutionException, InterruptedException, IOException {
 	    Firestore db = Connection.getDatabase();
 
@@ -239,6 +246,7 @@ public class Reader implements FirebaseReaderInterface {
 	        throw new RuntimeException("No se encontró ningún workout con el nombre: " + workoutName);
 	    }
 	}
+
 
 	/**
 	 * get aworkout containing all the reference sets
@@ -315,9 +323,12 @@ public class Reader implements FirebaseReaderInterface {
 			miUsuarioMap.put("refTOUSer", docRef);
 			for (Map.Entry<String, Object> entry : miUsuarioMap.entrySet()) {
 
+				System.out.println(entry.getKey() + " => " + entry.getValue());
 
 			}
-		} 
+		} else {
+			System.out.println("No such usuario found!");
+		}
 	//	dB.close();
 		return miUsuarioMap;
 	}
@@ -334,7 +345,7 @@ public class Reader implements FirebaseReaderInterface {
 			record = document.toObject(HistoricalRecord.class);
 			// System.out.println(record.toString());
 		} else {
-			//System.out.println("No such record found!");
+
 		}
 
 		return record;
@@ -349,8 +360,10 @@ public class Reader implements FirebaseReaderInterface {
 		if (document.exists()) {
 			// convert document to POJO
 			routine = document.toObject(Routine.class);
-			// System.out.println("ESTA ES LA ROUTINA"+routine.toString());
+
 		} else {
+			System.out.println("No such set found!");
+
 		}
 
 		return routine;

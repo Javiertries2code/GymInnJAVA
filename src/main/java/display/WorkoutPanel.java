@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -27,8 +28,8 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerListModel;
 import javax.swing.table.DefaultTableModel;
 
-import com.google.cloud.firestore.DocumentReference;
 
+import com.google.cloud.firestore.DocumentReference;
 import accesoDatos.Reader;
 import manager.Login;
 import manager.Workouts;
@@ -53,7 +54,6 @@ public class WorkoutPanel extends AbstractPanel {
 	 * Create the panel.
 	 */
 	public WorkoutPanel(List<JPanel> panels) {
-	
 		
 		JScrollPane scrollWorkouts = new JScrollPane();
 		scrollWorkouts.setBounds(44, 275, 524, 95);
@@ -156,15 +156,14 @@ public class WorkoutPanel extends AbstractPanel {
 		btnVolver.setBounds(218, 403, 156, 23);
 		add(btnVolver);
 		
-		
-
-		
 	}
+
 
 	// Additional methods
 	public DefaultTableModel getModelo() {
 		return modelo;
 	}
+
 
 	public void setModelo(DefaultTableModel modelo) {
 		this.modelo = modelo;
@@ -179,3 +178,6 @@ public class WorkoutPanel extends AbstractPanel {
 		}
 	}
 }
+
+
+

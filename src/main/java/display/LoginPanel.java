@@ -37,11 +37,13 @@ public class LoginPanel extends AbstractPanel {
 
 		textFieldUser = new JTextField();
 		textFieldUser.setBounds(268, 143, 86, 20);
+
 		add(textFieldUser);
 		textFieldUser.setColumns(10);
 
 		textFieldPassword = new JTextField();
 		textFieldPassword.setBounds(268, 197, 86, 20);
+
 		add(textFieldPassword);
 		textFieldPassword.setColumns(10);
 
@@ -83,6 +85,7 @@ public class LoginPanel extends AbstractPanel {
 			}
 		});
 		btnRegister.setBounds(265, 305, 89, 23);
+
 		add(btnRegister);
 		
 

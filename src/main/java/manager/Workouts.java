@@ -18,9 +18,7 @@ public class Workouts {
 		else 
 			levelSearch = Integer.parseInt(level);
 		ArrayList<Workout> workouts =  new Reader().getSameLowerLevelWorkouts(levelSearch);
-		
-		
-		
+
 		return workouts;		
 	}
 	

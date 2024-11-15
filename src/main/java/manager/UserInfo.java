@@ -44,7 +44,7 @@ public class UserInfo {
 				DocumentReference wkRef = (DocumentReference) usuario.getData().get("ref_workouts");
 
 				if (wkRef != null) {
-				
+
 					miUsuario.setWorkout(new Reader().getOneWorkout(wkRef));
 				
 				}
@@ -102,12 +102,12 @@ public class UserInfo {
 				miWorkout.setName(workout.getString("name"));
 				miWorkout.setLevel(workout.getDouble("level").intValue());
 				miWorkout.setNumSets(workout.getDouble("num_sets").intValue());
-				
+
 				DocumentReference SetRef = null;
 				try {
 					SetRef = (DocumentReference) workout.getData().get("ref_sets");
 				} catch (Exception e) {
-					
+
 					e.printStackTrace();
 				}
 

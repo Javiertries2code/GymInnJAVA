@@ -11,7 +11,6 @@ public class AppGymInn {
 
 	public static void main(String[] args) {
 		try {
-          
             new Frame().run();
             GuardarBackups backup = new GuardarBackups();
             
@@ -26,6 +25,7 @@ public class AppGymInn {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
 	}
 
 }

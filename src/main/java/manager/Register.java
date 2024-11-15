@@ -22,7 +22,9 @@ public class Register {
 
 	private boolean findDuplicate(Usuario usuario) throws Exception {
 		for(QueryDocumentSnapshot user: new Reader().findUsuariosFirebase()) {
+
 			if (user.getString("email").equalsIgnoreCase(usuario.getEmail()))
+
 			{
 				
 				return false;

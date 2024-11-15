@@ -1,15 +1,15 @@
 package display;
 
-import javax.swing.AbstractButton;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+
 import javax.swing.JTextField;
 
-import display.AbstractPanel.NamePanel;
+
 import objects.Routine;
 import thread.Chrono;
 
@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.awt.LayoutManager;
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -121,6 +122,7 @@ public class TrainingPanel extends AbstractPanel {
 						chronometer.start();
 			}
 		});
+
 		btnNewButton.setBounds(10, 99, 162, 30);
 		add(btnNewButton);
         
@@ -133,3 +135,4 @@ public class TrainingPanel extends AbstractPanel {
     	lblRoutine.setText(nombre);
     }
 }
+

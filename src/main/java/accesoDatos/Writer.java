@@ -63,13 +63,17 @@ public class Writer {
 	}
 	
 
+
 	public void addUser(Usuario usuario) throws Exception {
+
 
 		Firestore db = Connection.getDatabase();
 
 		
 
+
 		DocumentReference recordRef = db.collection("usuarios").document(usuario.getEmail());
+
 		 ApiFuture<WriteResult> future = recordRef.set(usuario);
 		
 		 try {
@@ -83,9 +87,13 @@ public class Writer {
 		    }
 
 		db.close();
+
 	}
 
 	/*public void addUser(Usuario usuario) throws Exception {
+
+
+
 		
 		Firestore db = Connection.getDatabase();
 		
@@ -112,8 +120,7 @@ public class Writer {
 		userNew.set(user);
 		
 		//db.close();
-	}
-	*/
+	}*/
 	
 	public void addSets( Routine usuario) throws Exception {
 	

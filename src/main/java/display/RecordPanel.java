@@ -55,6 +55,7 @@ public class RecordPanel extends AbstractPanel {
 			panelsvisibility(NamePanel.WORKOUT, panels);
 			}
 		});
+
 		btnNewButton.setBounds(34, 208, 142, 38);
 		add(btnNewButton);
 		
@@ -65,6 +66,7 @@ public class RecordPanel extends AbstractPanel {
 
 			}
 		});
+
 		btnNewButton_1.setBounds(34, 87, 142, 38);
 		add(btnNewButton_1);
 		
@@ -75,6 +77,7 @@ public class RecordPanel extends AbstractPanel {
 
 			}
 		});
+
 		btnHistoric.setBounds(34, 148, 142, 38);
 		add(btnHistoric);
 		
