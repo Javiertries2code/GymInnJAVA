@@ -11,7 +11,7 @@ import com.google.cloud.firestore.FirestoreOptions;
 public class Connection {
 
 	private static Firestore db = null;
-	private static final String FIREBASE_JASON = "../GymInn/gymconection.json";
+	private static final String FIREBASE_JASON = "../GymInnJAVA/gymconection.json";
 
 	/**
 	 * Singleton to stablish, if not yet running, a connection to the Firebase db
