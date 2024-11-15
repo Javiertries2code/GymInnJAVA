@@ -27,7 +27,7 @@ import manager.Login;
 import manager.Workouts;
 import objects.Workout;
 import objects.*;
-import thread.Chrono;
+import thread.*;
 
 public class WorkoutPanel extends AbstractPanel {
 
@@ -41,6 +41,7 @@ public class WorkoutPanel extends AbstractPanel {
 	private JLabel lblNewLabel;
 	private JButton btnStartTraining;
 	private Thread chronometer = null;
+	private Countdown countdown = null;
 
 	/**
 	 * Create the panel.
@@ -62,7 +63,7 @@ public class WorkoutPanel extends AbstractPanel {
 				table = new JTable(modelo);
 				scrollWorkouts.setViewportView(table);
 				
-				 String[] options = {"0", "1", "2", "3", "4", "5", "6", "7","8","9"};
+				 String[] options = {"all","0", "1", "2", "3", "4", "5", "6", "7","8","9"};
 			        SpinnerListModel spinnerModel = new SpinnerListModel(options);
 
 			        // Crear el JSpinner con el modelo
@@ -76,8 +77,10 @@ public class WorkoutPanel extends AbstractPanel {
 					
 					
 							try {
-								showAllWorkouts(modelo, new Workouts().showSameLowerLevelWorkouts(spinner.getValue().toString()));
-							} catch (Exception e1) {
+								  if (spinner.getValue().toString().equalsIgnoreCase("all"))
+	                                    showAllWorkouts(modelo, new Workouts().showSameLowerLevelWorkouts("-1"));
+	                                else
+	                                    showAllWorkouts(modelo, new Workouts().showSameLowerLevelWorkouts(spinner.getValue().toString()));							} catch (Exception e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
@@ -186,10 +189,14 @@ public class WorkoutPanel extends AbstractPanel {
 				panel.add(countDownTextField);
 				//CREATING THREAD
 				   chronometer = new Chrono(countDownTextField, chronoTextField, new ArrayList<Routine>() );
-
+				   countdown = new Countdown(countDownTextField, chronoTextField, new ArrayList<Routine>() );
 				JButton btnNewButton = new JButton("Start Stop");
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if ((countdown).isAlive())
+							((Countdown) countdown).startStop();
+							else
+								countdown.start();
 						
 
 						if (chronometer.isAlive())
