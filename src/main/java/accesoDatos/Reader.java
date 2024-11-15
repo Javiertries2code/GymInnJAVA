@@ -67,8 +67,7 @@ public class Reader implements FirebaseReaderInterface {
 				.setProjectId("gyminn-389ca").setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
 
 		db = firestoreOptions.getService();
-		if (db == null)
-			System.out.println("got null in getConnection");
+		
 
 	}
 
@@ -113,7 +112,7 @@ public class Reader implements FirebaseReaderInterface {
 		if (document.exists()) {
 			return wkRef;
 		} else {
-			System.out.println("Documento no existe");
+			
 			return null;
 		}
 	}
@@ -136,13 +135,10 @@ public class Reader implements FirebaseReaderInterface {
 		ApiFuture<DocumentSnapshot> query = db.collection("usuarios").document(Login.currentUser.getId()).get();
 		DocumentSnapshot document = query.get();
 
-		System.out.println("reloadWorkout BEFORE" + Login.currentUser.getLevel());
-
 		Login.currentUser.setLevel(((DocumentSnapshot) document.getData()).getDouble("level").intValue());
 
 		DocumentReference wkRef = (DocumentReference) document.getData().get("ref_workouts");
 		Login.currentUser.setWorkout(new Reader().getOneWorkout(wkRef));
-		System.out.println("reloadWorkout AFTER" + Login.currentUser.getLevel());
 	}
 
 	/**
@@ -278,7 +274,6 @@ public class Reader implements FirebaseReaderInterface {
 
 				if (entry.getKey().equalsIgnoreCase("ref_sets")) {
 					refSetsDoc = (ArrayList<DocumentReference>) entry.getValue();
-					  System.out.println(entry.getValue() +"cccc " );
 
 				}
 			}
@@ -320,12 +315,9 @@ public class Reader implements FirebaseReaderInterface {
 			miUsuarioMap.put("refTOUSer", docRef);
 			for (Map.Entry<String, Object> entry : miUsuarioMap.entrySet()) {
 
-				System.out.println(entry.getKey() + " => " + entry.getValue());
 
 			}
-		} else {
-			System.out.println("No such usuario found!");
-		}
+		} 
 	//	dB.close();
 		return miUsuarioMap;
 	}
@@ -359,7 +351,6 @@ public class Reader implements FirebaseReaderInterface {
 			routine = document.toObject(Routine.class);
 			// System.out.println("ESTA ES LA ROUTINA"+routine.toString());
 		} else {
-			System.out.println("No such set found!");
 		}
 
 		return routine;

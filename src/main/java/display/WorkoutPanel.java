@@ -81,7 +81,7 @@ public class WorkoutPanel extends AbstractPanel {
 						String workoutName = (String) table.getValueAt(table.getSelectedRow(), 0);
 
 						DocumentReference workoutRef =reader.getWorkoutReferenceByName(workoutName);
-						
+					
 						TrainingPanel miTrainingPanel = (TrainingPanel) panels.get(5); /*NamePanel.TRAINING*/
 
 						miTrainingPanel.actualizarNombreWorkout(workoutName);
@@ -171,10 +171,8 @@ public class WorkoutPanel extends AbstractPanel {
 	}
 
 	public void showAllWorkouts(DefaultTableModel modelWorkouts, ArrayList<Workout> workouts) {
-		System.out.println("inshowAllWorkouts");
 		modelWorkouts.setRowCount(0);
-		for (Workout workout: workouts)
-			System.out.println(workout.toString());
+		
 		for (Workout workout : workouts) {
 			String[] linea = { workout.getName(), String.valueOf(workout.getLevel()),  String.valueOf(workout.getNumSets()), };
 			modelWorkouts.addRow(linea);
