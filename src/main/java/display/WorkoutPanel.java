@@ -42,7 +42,7 @@ public class WorkoutPanel extends AbstractPanel {
 	private JTable table;
 	private DefaultTableModel modelo;
 	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+	private JButton btnProfile;
 	private JButton btnHistoric;
 	private JButton btnNewButton_3;
 	private JLabel lblNewLabel;
@@ -53,12 +53,10 @@ public class WorkoutPanel extends AbstractPanel {
 	 * Create the panel.
 	 */
 	public WorkoutPanel(List<JPanel> panels) {
-		
-		
-		setBackground(new Color(255, 255, 255));
+	
 		
 		JScrollPane scrollWorkouts = new JScrollPane();
-		scrollWorkouts.setBounds(44, 338, 524, 78);
+		scrollWorkouts.setBounds(44, 275, 524, 95);
 		add(scrollWorkouts);
 
 		// creating model for table of most liked
@@ -67,7 +65,7 @@ public class WorkoutPanel extends AbstractPanel {
 		modelo.addColumn("Level");
 		modelo.addColumn("Num Sets");
 
-		// create table+
+		// create table
 		table = new JTable(modelo);
 		scrollWorkouts.setViewportView(table);
 		
@@ -83,10 +81,6 @@ public class WorkoutPanel extends AbstractPanel {
 						String workoutName = (String) table.getValueAt(table.getSelectedRow(), 0);
 
 						DocumentReference workoutRef =reader.getWorkoutReferenceByName(workoutName);
-					
-						
-						
-						
 						
 						TrainingPanel miTrainingPanel = (TrainingPanel) panels.get(5); /*NamePanel.TRAINING*/
 
@@ -107,29 +101,64 @@ public class WorkoutPanel extends AbstractPanel {
 		});
 
 		// Other buttons and components
-		String[] options = {"-1","0", "1", "2", "3", "4", "5", "6", "7","8","9"};
+		String[] options = {"all","0", "1", "2", "3", "4", "5", "6", "7","8","9"};
 		SpinnerListModel spinnerModel = new SpinnerListModel(options);
 
-		// Crear el JSpinner con el modelo
+		// Create the JSpinner with the model 
 		JSpinner spinner = new JSpinner(spinnerModel);
-		spinner.setBounds(468, 108, 100, 20);
+		spinner.setBounds(468, 201, 100, 20);
 		add(spinner);
 		
 		JButton btnWorkouts = new JButton("Workouts");
 		btnWorkouts.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					showAllWorkouts(modelo, new Workouts().showSameLowerLevelWorkouts(spinner.getValue().toString()));
+					if (spinner.getValue().toString().equalsIgnoreCase("all"))
+                        showAllWorkouts(modelo, new Workouts().showSameLowerLevelWorkouts("-1"));
+                    else
+                        showAllWorkouts(modelo, new Workouts().showSameLowerLevelWorkouts(spinner.getValue().toString()));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
-		btnWorkouts.setBounds(484, 10, 89, 23);
+		btnWorkouts.setBounds(414, 26, 156, 23);
 		add(btnWorkouts);
+		
+		btnProfile = new JButton("Profile");
+		btnProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelsvisibility(NamePanel.PROFILE, panels);
 
-		// Remaining buttons and other code
-		// ...
+			}
+		});
+	
+		btnProfile.setBounds(44, 26, 156, 23);
+		add(btnProfile);
+		
+		btnHistoric = new JButton("Historic records");
+		btnHistoric.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelsvisibility(NamePanel.RECORDS, panels);
+
+			}
+		});
+		btnHistoric.setBounds(218, 26, 170, 23);
+		add(btnHistoric);
+		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				panelsvisibility(NamePanel.LOGIN, panels);
+			}
+		});
+		btnVolver.setBounds(218, 403, 156, 23);
+		add(btnVolver);
+		
+		
+
+		
 	}
 
 	// Additional methods

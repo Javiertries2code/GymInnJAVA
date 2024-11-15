@@ -55,8 +55,6 @@ public class RecordPanel extends AbstractPanel {
 			panelsvisibility(NamePanel.WORKOUT, panels);
 			}
 		});
-		btnNewButton.setBackground(new Color(128, 128, 128));
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton.setBounds(34, 208, 142, 38);
 		add(btnNewButton);
 		
@@ -67,8 +65,6 @@ public class RecordPanel extends AbstractPanel {
 
 			}
 		});
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnNewButton_1.setBackground(Color.GRAY);
 		btnNewButton_1.setBounds(34, 87, 142, 38);
 		add(btnNewButton_1);
 		
@@ -79,8 +75,6 @@ public class RecordPanel extends AbstractPanel {
 
 			}
 		});
-		btnHistoric.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnHistoric.setBackground(Color.GRAY);
 		btnHistoric.setBounds(34, 148, 142, 38);
 		add(btnHistoric);
 		

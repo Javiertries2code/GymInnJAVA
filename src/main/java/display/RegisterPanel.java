@@ -37,32 +37,32 @@ public class RegisterPanel extends AbstractPanel {
 		
 		textFieldName = new JTextField();
 		//textFieldName.setText("your name here");
-		textFieldName.setBounds(361, 171, 86, 20);
+		textFieldName.setBounds(334, 87, 93, 20);
 		add(textFieldName);
 		textFieldName.setColumns(10);
 		
 		textFieldSurname = new JTextField();
 		//textFieldSurname.setText("Surname here");
 		textFieldSurname.setColumns(10);
-		textFieldSurname.setBounds(361, 202, 86, 20);
+		textFieldSurname.setBounds(334, 118, 93, 20);
 		add(textFieldSurname);
 		
 		textFieldBirthday = new JTextField();
 		//textFieldBirthday.setText("Birthday");
 		textFieldBirthday.setColumns(10);
-		textFieldBirthday.setBounds(361, 236, 86, 20);
+		textFieldBirthday.setBounds(334, 152, 93, 20);
 		add(textFieldBirthday);
 		
 		textFieldPassword = new JTextField();
 		//textFieldPassword.setText("Password");
 		textFieldPassword.setColumns(10);
-		textFieldPassword.setBounds(361, 272, 86, 20);
+		textFieldPassword.setBounds(334, 188, 93, 20);
 		add(textFieldPassword);
 		
 		textFieldEmail = new JTextField();
 		//textFieldEmail.setText("email");
 		textFieldEmail.setColumns(10);
-		textFieldEmail.setBounds(361, 307, 86, 20);
+		textFieldEmail.setBounds(334, 223, 93, 20);
 		add(textFieldEmail);
 		
 	    String[] options = {"false","true" };
@@ -70,7 +70,7 @@ public class RegisterPanel extends AbstractPanel {
 
      
         JSpinner spinner = new JSpinner(spinnerModel);
-        spinner.setBounds(361, 338, 93, 20);
+        spinner.setBounds(334, 254, 93, 20);
         add(spinner);
 		
 		JButton btnRegister = new JButton("Register");
@@ -101,37 +101,37 @@ public class RegisterPanel extends AbstractPanel {
 			}
 
 		});
-		btnRegister.setBounds(333, 403, 121, 23);
+		btnRegister.setBounds(248, 339, 121, 23);
 		add(btnRegister);
 		
 		JLabel lblNewLabel = new JLabel("Is Trainer");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel.setBounds(214, 341, 76, 17);
+		lblNewLabel.setBounds(187, 257, 76, 17);
 		add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("name");
+		JLabel lblNewLabel_1 = new JLabel("Name");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1.setBounds(214, 174, 76, 17);
+		lblNewLabel_1.setBounds(187, 90, 76, 17);
 		add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Surname");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_2.setBounds(214, 205, 76, 17);
+		lblNewLabel_2.setBounds(187, 121, 76, 17);
 		add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Birthday");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_3.setBounds(214, 239, 76, 17);
+		lblNewLabel_3.setBounds(187, 155, 76, 17);
 		add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Password");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4.setBounds(214, 275, 76, 17);
+		lblNewLabel_4.setBounds(187, 191, 76, 17);
 		add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Email");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_5.setBounds(214, 306, 76, 17);
+		lblNewLabel_5.setBounds(187, 222, 76, 17);
 		add(lblNewLabel_5);
 		
 
