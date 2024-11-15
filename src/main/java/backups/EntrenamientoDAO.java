@@ -1,4 +1,4 @@
-package pruebasAkira;
+package backups;
 
 import com.google.cloud.firestore.Firestore;
 
@@ -23,10 +23,9 @@ public class EntrenamientoDAO {
 
     static {
         try {
-            db = Connection.getDatabase();  // Aquí se puede lanzar IOException
+            db = Connection.getDatabase();
         } catch (IOException e) {
             e.printStackTrace();
-            // Maneja el error de la manera que prefieras
         }
     }
 
@@ -39,24 +38,19 @@ public class EntrenamientoDAO {
         List<Workout> workouts = new ArrayList<>();
 
         try {
-            // Referencia a la colección de entrenamientos en Firestore
             CollectionReference workoutsCollection = db.collection("workouts");
             ApiFuture<QuerySnapshot> query = workoutsCollection.get();
             QuerySnapshot querySnapshot = query.get();
 
-            // Iteramos sobre los entrenamientos obtenidos
             for (QueryDocumentSnapshot document : querySnapshot) {
-                // Convertimos cada documento a un objeto Workout
+
                 Workout workout = document.toObject(Workout.class);
                 
-                // Ahora obtenemos las rutinas de ese entrenamiento (si las tiene)
                 List<Routine> routines = getRoutinesForWorkout(workout.getId());
-                workout.setRefSets(new ArrayList<>(routines));  // Asociamos las rutinas al entrenamiento
-
+                workout.setRefSets(new ArrayList<>(routines));
                 workouts.add(workout);
             }
 
-            // Guardamos la información en el archivo backup2.dat
             saveToFile(workouts);
 
         } catch (InterruptedException | ExecutionException e) {
@@ -76,14 +70,13 @@ public class EntrenamientoDAO {
         List<Routine> routines = new ArrayList<>();
 
         try {
-            // Referencia a la subcolección de rutinas de un entrenamiento específico
+          
             CollectionReference routinesCollection = db.collection("workouts")
-                    .document(workoutId)  // Documento específico de un workout
-                    .collection("routines");  // Subcolección de rutinas
+                    .document(workoutId)
+                    .collection("routines");
             ApiFuture<QuerySnapshot> query = routinesCollection.get();
             QuerySnapshot querySnapshot = query.get();
 
-            // Iteramos sobre las rutinas de ese entrenamiento
             for (QueryDocumentSnapshot document : querySnapshot) {
                 Routine routine = document.toObject(Routine.class);
                 routines.add(routine);
@@ -102,10 +95,9 @@ public class EntrenamientoDAO {
      * @param workouts la lista de entrenamientos a guardar
      */
     private static void saveToFile(List<Workout> workouts) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("backup2.dat"))) {
-            // Serializamos la lista de entrenamientos en el archivo
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("backup.dat"))) {
             oos.writeObject(workouts);
-            System.out.println("Datos guardados exitosamente en backup2.dat");
+            System.out.println("Datos guardados exitosamente en backup.dat");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,18 +112,16 @@ public class EntrenamientoDAO {
         List<Usuario> usuarios = new ArrayList<>();
 
         try {
-            // Referencia a la colección de usuarios en Firestore
-            CollectionReference usersCollection = db.collection("users");
+ 
+            CollectionReference usersCollection = db.collection("usuarios");
             ApiFuture<QuerySnapshot> query = usersCollection.get();
             QuerySnapshot querySnapshot = query.get();
 
-            // Iteramos sobre los usuarios obtenidos
             for (QueryDocumentSnapshot document : querySnapshot) {
                 Usuario usuario = document.toObject(Usuario.class);
                 usuarios.add(usuario);
             }
 
-            // Guardamos los usuarios en un archivo
             saveUsersToFile(usuarios);
 
         } catch (InterruptedException | ExecutionException e) {
@@ -147,10 +137,9 @@ public class EntrenamientoDAO {
      * @param usuarios la lista de usuarios a guardar
      */
     private static void saveUsersToFile(List<Usuario> usuarios) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("backup2.dat", true))) {
-            // Serializamos la lista de usuarios en el archivo
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("backup.dat", true))) {
             oos.writeObject(usuarios);
-            System.out.println("Usuarios guardados exitosamente en backup2.dat");
+            System.out.println("Usuarios guardados exitosamente en backups.dat");
         } catch (IOException e) {
             e.printStackTrace();
         }

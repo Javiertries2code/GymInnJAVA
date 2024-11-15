@@ -69,7 +69,8 @@ public class Writer {
 
 		
 
-		DocumentReference recordRef = db.collection("usuarios").document();
+		DocumentReference recordRef = db.collection("usuarios").document(usuario.getEmail());
+		);
 		 ApiFuture<WriteResult> future = recordRef.set(usuario);
 		
 		 try {

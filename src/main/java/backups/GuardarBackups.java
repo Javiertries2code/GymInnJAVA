@@ -1,4 +1,4 @@
-package pruebasAkira;
+package backups;
 
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
@@ -21,16 +21,14 @@ public class GuardarBackups {
 
     public GuardarBackups() {
         try {
-            // Conectar a Firestore
             db = Connection.getDatabase();
         } catch (IOException e) {
-            e.printStackTrace();  // Manejo de excepción de IO
+            e.printStackTrace();
         }
     }
 
-    // Método para obtener los datos de Firestore y guardarlos en el backup
     public void obtenerDatosYGuardarBackup() throws ExecutionException, InterruptedException, IOException {
-        // Obtener los datos desde Firestore
+
         List<Workout> workouts = obtenerWorkoutsDeFirestore();
         List<Routine> routines = obtenerRoutinesDeFirestore();
         List<Usuario> usuarios = obtenerUsuariosDeFirestore();
@@ -40,7 +38,6 @@ public class GuardarBackups {
         backups.saveAllData(workouts, routines, usuarios);  // Guardar en el archivo backup.dat
     }
 
-    // Método para obtener los entrenamientos desde Firestore
     private List<Workout> obtenerWorkoutsDeFirestore() throws ExecutionException, InterruptedException {
         List<Workout> workouts = new ArrayList<>();
         try {
@@ -53,12 +50,11 @@ public class GuardarBackups {
             }
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
-            throw e;  // Propagar la excepción
+            throw e;
         }
         return workouts;
     }
 
-    // Método para obtener las rutinas desde Firestore
     private List<Routine> obtenerRoutinesDeFirestore() throws ExecutionException, InterruptedException {
         List<Routine> routines = new ArrayList<>();
         try {
@@ -71,16 +67,15 @@ public class GuardarBackups {
             }
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
-            throw e;  // Propagar la excepción
+            throw e;
         }
         return routines;
     }
 
-    // Método para obtener los usuarios desde Firestore
     private List<Usuario> obtenerUsuariosDeFirestore() throws ExecutionException, InterruptedException {
         List<Usuario> usuarios = new ArrayList<>();
         try {
-            ApiFuture<QuerySnapshot> query = db.collection("users").get();
+            ApiFuture<QuerySnapshot> query = db.collection("usuarios").get();
             QuerySnapshot querySnapshot = query.get();
 
             for (QueryDocumentSnapshot document : querySnapshot) {
@@ -89,7 +84,7 @@ public class GuardarBackups {
             }
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
-            throw e;  // Propagar la excepción
+            throw e;
         }
         return usuarios;
     }

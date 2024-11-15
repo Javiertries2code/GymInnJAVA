@@ -3,6 +3,7 @@ package objects;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Usuario implements Serializable{
@@ -22,7 +23,7 @@ public class Usuario implements Serializable{
 	private Integer progress;
 	private boolean isTrainer; 
 	private Workout workout;
-	private ArrayList<HistoricalRecord> wk_history;
+	private List<HistoricalRecord> wk_history;
 	
 
 	public Usuario(String id, String name, String surname, String birthday, String password, String email,
@@ -125,7 +126,7 @@ public class Usuario implements Serializable{
 	public void setWorkout(Workout workout) {
 		this.workout = workout;
 	}
-	public ArrayList<HistoricalRecord> getWk_history() {
+	public List<HistoricalRecord> getWk_history() {
 		return wk_history;
 	}
 	public void setWk_history(ArrayList<HistoricalRecord> wk_history) {
