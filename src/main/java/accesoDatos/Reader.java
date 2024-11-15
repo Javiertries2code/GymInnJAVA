@@ -33,7 +33,9 @@ import objects.Workout;
 public class Reader implements FirebaseReaderInterface {
 
 	private static Firestore db = null;
+
 	private static final String FIREBASE_JASON = "../GymInn/gymconection.json";
+
 
 	/**
 	 * Singleton to stablish, if not yet running, a connection to the Firebase db
@@ -67,8 +69,10 @@ public class Reader implements FirebaseReaderInterface {
 				.setProjectId("gyminn-389ca").setCredentials(GoogleCredentials.fromStream(serviceAccount)).build();
 
 		db = firestoreOptions.getService();
+
 		if (db == null)
 			System.out.println("got null in getConnection");
+
 
 	}
 
@@ -113,10 +117,12 @@ public class Reader implements FirebaseReaderInterface {
 		if (document.exists()) {
 			return wkRef;
 		} else {
+
 			System.out.println("Documento no existe");
 			return null;
 		}
 	}
+
 
 	/**
 	 * realod the info of the users workouts, and current level, neccesary to make
@@ -125,20 +131,20 @@ public class Reader implements FirebaseReaderInterface {
 	 * @throws IOException
 	 *
 	 */
-	@Override
+
 	public void reloadWorkout() throws InterruptedException, ExecutionException, IOException {
+
 		Firestore db = Connection.getDatabase();
 
 		ApiFuture<DocumentSnapshot> query = db.collection("usuarios").document(Login.currentUser.getId()).get();
 		DocumentSnapshot document = query.get();
 
-		System.out.println("reloadWorkout BEFORE" + Login.currentUser.getLevel());
 
 		Login.currentUser.setLevel(((DocumentSnapshot) document.getData()).getDouble("level").intValue());
 
 		DocumentReference wkRef = (DocumentReference) document.getData().get("ref_workouts");
 		Login.currentUser.setWorkout(new Reader().getOneWorkout(wkRef));
-		System.out.println("reloadWorkout AFTER" + Login.currentUser.getLevel());
+
 	}
 
 	/**
@@ -224,6 +230,24 @@ public class Reader implements FirebaseReaderInterface {
 
 	}
 
+
+	public DocumentReference getWorkoutReferenceByName(String workoutName) throws ExecutionException, InterruptedException, IOException {
+	    Firestore db = Connection.getDatabase();
+
+	    Query query = db.collection("workouts")
+	                   .whereEqualTo("name", workoutName);
+	    
+	    ApiFuture<QuerySnapshot> querySnapshot = query.get();
+	    List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
+
+	    if (documents.size() > 0) {
+	        return documents.get(0).getReference();
+	    } else {
+	        throw new RuntimeException("No se encontró ningún workout con el nombre: " + workoutName);
+	    }
+	}
+
+
 	/**
 	 * get aworkout containing all the reference sets
 	 * 
@@ -258,6 +282,7 @@ public class Reader implements FirebaseReaderInterface {
 
 				if (entry.getKey().equalsIgnoreCase("ref_sets")) {
 					refSetsDoc = (ArrayList<DocumentReference>) entry.getValue();
+
 				}
 			}
 
@@ -320,7 +345,7 @@ public class Reader implements FirebaseReaderInterface {
 			record = document.toObject(HistoricalRecord.class);
 			// System.out.println(record.toString());
 		} else {
-			System.out.println("No such record found!");
+
 		}
 
 		return record;
@@ -335,9 +360,10 @@ public class Reader implements FirebaseReaderInterface {
 		if (document.exists()) {
 			// convert document to POJO
 			routine = document.toObject(Routine.class);
-			// System.out.println(routine.toString());
+
 		} else {
 			System.out.println("No such set found!");
+
 		}
 
 		return routine;

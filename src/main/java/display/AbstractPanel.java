@@ -23,7 +23,9 @@ public abstract class AbstractPanel extends JPanel {
 	 */
 	public AbstractPanel() {
 		setBounds(0, 0, 650, 500);
+
 		setBackground(new Color(255, 255, 255));
+
 		setLayout(null);
 
 		

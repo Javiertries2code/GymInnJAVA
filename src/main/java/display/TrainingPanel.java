@@ -1,74 +1,75 @@
 package display;
 
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import javax.swing.JTextField;
+
+
+import objects.Routine;
+import thread.Chrono;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JPanel;
-
-import manager.Record;
-import objects.Routine;
-import objects.Usuario;
-import thread.Chrono;
-
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import thread.Chrono;
+import java.awt.LayoutManager;
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
+
+import thread.Chrono;
 
 public class TrainingPanel extends AbstractPanel {
 
-	private static final long serialVersionUID = 1L;
-	private JTable table;
+    private static final long serialVersionUID = 1L;
+	protected JLabel nombreWk;
+	protected JLabel lblRoutine;
 	private Thread chronometer = null;
+     
+ 
 
-	/**
-	 * Create the panel.
-	 */
-	public TrainingPanel(List<JPanel> panels ) {
-		JButton btnNewRecord = new JButton("ADD NEW RECORD, UNTILL it goes automatic");
-		btnNewRecord.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					Usuario usuario = new Record().getOneUsuario();
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-		btnNewRecord.setBounds(427, 383, 201, 47);
-		add(btnNewRecord);
-		
-		JTextArea textDescription = new JTextArea();
-		textDescription.setBounds(223, 67, 183, 40);
-		add(textDescription);
-		
-		JLabel lblRoutine = new JLabel("routine name");
-		lblRoutine.setBounds(268, 11, 108, 23);
-		add(lblRoutine);
-		
-	
-		JLabel lblWorkout = new JLabel("Workout name");
-		lblWorkout.setBounds(507, 11, 108, 23);
-		add(lblWorkout);
-		
-		
-		JPanel panel = new JPanel();
+
+    public TrainingPanel(List<JPanel> panels) {
+     	
+
+        JButton btnNewRecord = new JButton("ADD NEW RECORD, UNTILL it goes automatic");
+        btnNewRecord.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+             }
+        });
+        
+        nombreWk = new JLabel("nombre");
+        nombreWk.setBounds(482, 31, 137, 40);
+        add(nombreWk);
+        
+        btnNewRecord.setBounds(382, 365, 201, 47);
+        add(btnNewRecord);
+
+        lblRoutine = new JLabel("Routine : "+"Descripción");
+        lblRoutine.setBounds(10, 40, 400, 23);
+        add(lblRoutine);
+
+        JButton btnVolver = new JButton("Return");
+        btnVolver.setBounds(68, 363, 234, 50);
+        add(btnVolver);
+
+        btnVolver.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                panelsvisibility(NamePanel.WORKOUT, panels);
+            }
+        });
+        
+        
+        JPanel panel = new JPanel();
 		LayoutManager layout = new GridLayout(6, 2);
 		panel.setLayout(null);
-		panel.setBounds(26, 353, 289, 77);
+		panel.setBounds(10, 213, 400, 80);
 		panel.setBorder(BorderFactory.createTitledBorder("Timers"));
 
 		NumberFormat chronoFormat = NumberFormat.getNumberInstance();
@@ -121,9 +122,17 @@ public class TrainingPanel extends AbstractPanel {
 						chronometer.start();
 			}
 		});
-		btnNewButton.setBounds(83, 294, 162, 32);
-		add(btnNewButton);
-		
 
-	}
+		btnNewButton.setBounds(10, 99, 162, 30);
+		add(btnNewButton);
+        
+    }
+
+    public void actualizarNombreWorkout(String workoutName) {
+        nombreWk.setText(workoutName);
+    }
+    public void nombreEjercicioDescripcion(String nombre) {
+    	lblRoutine.setText(nombre);
+    }
 }
+

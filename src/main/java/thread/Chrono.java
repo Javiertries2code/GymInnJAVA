@@ -100,7 +100,7 @@ public class Chrono extends Thread {
 		startTime = 0L;
 		stoptTime = 0L;
 		elapsedTime = 0L;
-		
+
 	}
 
 }
